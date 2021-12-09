@@ -1,23 +1,15 @@
-package io.czen.epldashboardapi.model;
+package io.czen.epldashboardapi.data;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.time.LocalDate;
 
 @Getter
 @Setter
-@Entity
-@NoArgsConstructor
-public class Match {
+public class MatchInput {
 
-    @Id
-    private long id;
+    private String id;
     private String season;
-    private LocalDate date;
+    private String date;
     private String homeTeam;
     private String awayTeam;
     private String fullTimeHomeTeamGoals;
@@ -39,10 +31,4 @@ public class Match {
     private String awayTeamYellowCards;
     private String homeTeamRedCards;
     private String awayTeamRedCards;
-
-    public Match(String homeTeam, String awayTeam, String fullTimeResult) {
-        this.homeTeam = homeTeam;
-        this.awayTeam = awayTeam;
-        this.fullTimeResult = fullTimeResult;
-    }
 }
