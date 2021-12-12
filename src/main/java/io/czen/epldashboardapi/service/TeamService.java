@@ -5,6 +5,8 @@ import io.czen.epldashboardapi.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TeamService {
 
@@ -15,7 +17,7 @@ public class TeamService {
         this.teamRepository = teamRepository;
     }
 
-    public Iterable<Team> getAllTeams() {
-        return this.teamRepository.findAll();
+    public List<Team> getAllTeams() {
+        return this.teamRepository.findAllByOrderByTeamName();
     }
 }

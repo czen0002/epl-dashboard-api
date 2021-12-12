@@ -23,7 +23,7 @@ public class TeamController {
     }
 
     @GetMapping(value = "/team")
-    public Iterable<Team> getAllTeam() {
+    public List<Team> getAllTeam() {
         return this.teamService.getAllTeams();
     }
 
