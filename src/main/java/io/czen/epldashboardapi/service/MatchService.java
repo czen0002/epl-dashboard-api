@@ -20,4 +20,8 @@ public class MatchService {
     public List<Match> getMatchesBySeason(String teamName, String season) {
         return this.matchRepository.getMatchesByTeamBySeason(teamName, season);
     }
+
+    public List<Match> getLatestMatchesByTeam(String teamName, int count) {
+        return this.matchRepository.getLatestMatchesByTeam(teamName, count);
+    }
 }

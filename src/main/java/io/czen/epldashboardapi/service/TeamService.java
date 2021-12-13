@@ -17,7 +17,11 @@ public class TeamService {
         this.teamRepository = teamRepository;
     }
 
-    public List<Team> getAllTeams() {
+    public Iterable<Team> getAllTeams() {
         return this.teamRepository.findAllByOrderByTeamName();
+    }
+
+    public Team getTeam(String teamName) {
+        return this.teamRepository.findByTeamName(teamName).orElse(null);
     }
 }

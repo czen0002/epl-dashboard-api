@@ -23,7 +23,7 @@ public class TeamController {
     }
 
     @GetMapping(value = "/team")
-    public List<Team> getAllTeam() {
+    public Iterable<Team> getAllTeam() {
         return this.teamService.getAllTeams();
     }
 
@@ -32,4 +32,11 @@ public class TeamController {
         return this.matchService.getMatchesBySeason(teamName, season);
     }
 
+    @GetMapping(value = "/team/{teamName}")
+    public Team getTeam(@PathVariable String teamName, @RequestParam int count) {
+        Team team = this.teamService.getTeam(teamName);
+        if (team != null) team.setMatches(this.matchService.getLatestMatchesByTeam(teamName, count));
+
+        return team;
+    }
 }
