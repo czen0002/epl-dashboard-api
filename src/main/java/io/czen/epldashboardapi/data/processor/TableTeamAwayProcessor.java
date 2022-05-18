@@ -16,7 +16,6 @@ public class TableTeamAwayProcessor implements ItemProcessor<MatchInput, TableTe
                 0, 0);
         tableTeamAway.setTeamName(matchInput.getAwayTeam());
         tableTeamAway.setSeason(matchInput.getSeason());
-        // won || draw || lost -> points
         Integer homeTeamGoals = Integer.parseInt(matchInput.getFullTimeHomeTeamGoals());
         Integer awayTeamGoals = Integer.parseInt(matchInput.getFullTimeAwayTeamGoals());
         if (awayTeamGoals > homeTeamGoals) {
@@ -28,11 +27,8 @@ public class TableTeamAwayProcessor implements ItemProcessor<MatchInput, TableTe
             tableTeamAway.setDrawn(1);
             tableTeamAway.setPoints(1);
         }
-        // goalsFor
         tableTeamAway.setGoalsFor(awayTeamGoals);
-        // goalsAgainst
         tableTeamAway.setGoalsAgainst(homeTeamGoals);
-        // goalsDifference = goalsFor - goalsAgainst
         tableTeamAway.setGoalsDifference(awayTeamGoals - homeTeamGoals);
         return tableTeamAway;
     }
