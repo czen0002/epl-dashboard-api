@@ -13,13 +13,12 @@ import javax.persistence.Id;
 @Setter
 @Entity
 @NoArgsConstructor
-public class TableTeam {
+public class MatchTeam {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String teamName;
-    private Integer played;
     private Integer won;
     private Integer drawn;
     private Integer lost;
@@ -29,9 +28,8 @@ public class TableTeam {
     private Integer points;
     private String season;
 
-    public TableTeam(Integer played, Integer won, Integer drawn, Integer lost, Integer goalsFor, Integer goalsAgainst,
+    public MatchTeam(Integer won, Integer drawn, Integer lost, Integer goalsFor, Integer goalsAgainst,
                      Integer goalsDifference, Integer points) {
-        this.played = played;
         this.won = won;
         this.drawn = drawn;
         this.lost = lost;
