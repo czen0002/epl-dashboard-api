@@ -2,22 +2,22 @@ package data.processor;
 
 import io.czen.epldashboardapi.data.MatchInput;
 import io.czen.epldashboardapi.data.processor.TableTeamHomeProcessor;
-import io.czen.epldashboardapi.model.TableTeam;
+import io.czen.epldashboardapi.model.MatchTeam;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TableTeamHomeProcessorTest {
+public class MatchTeamHomeProcessorTest {
 
     private TableTeamHomeProcessor processor;
-    private TableTeam tableTeamHome;
+    private MatchTeam matchTeamHome;
     private MatchInput matchInput;
 
     @BeforeEach
     private void init() {
         processor = new TableTeamHomeProcessor();
-        tableTeamHome = new TableTeam();
+        matchTeamHome = new MatchTeam();
         matchInput = new MatchInput();
     }
 
@@ -27,18 +27,17 @@ public class TableTeamHomeProcessorTest {
         matchInput.setSeason("2021-22");
         matchInput.setFullTimeHomeTeamGoals("3");
         matchInput.setFullTimeAwayTeamGoals("2");
-        tableTeamHome = processor.process(matchInput);
+        matchTeamHome = processor.process(matchInput);
 
-        assertEquals(tableTeamHome.getTeamName(), "Arsenal");
-        assertEquals(tableTeamHome.getSeason(), "2021-22");
-        assertEquals(tableTeamHome.getWon(), 1);
-        assertEquals(tableTeamHome.getDrawn(), 0);
-        assertEquals(tableTeamHome.getLost(), 0);
-        assertEquals(tableTeamHome.getPoints(), 3);
-        assertEquals(tableTeamHome.getGoalsFor(), 3);
-        assertEquals(tableTeamHome.getGoalsAgainst(), 2);
-        assertEquals(tableTeamHome.getGoalsDifference(), 1);
-        assertEquals(tableTeamHome.getPlayed(), 1);
+        assertEquals("Arsenal", matchTeamHome.getTeamName());
+        assertEquals("2021-22", matchTeamHome.getSeason());
+        assertEquals(1, matchTeamHome.getWon());
+        assertEquals(0, matchTeamHome.getDrawn());
+        assertEquals(0, matchTeamHome.getLost());
+        assertEquals(3, matchTeamHome.getPoints());
+        assertEquals(3, matchTeamHome.getGoalsFor());
+        assertEquals(2, matchTeamHome.getGoalsAgainst());
+        assertEquals(1, matchTeamHome.getGoalsDifference());
     }
 
     @Test
@@ -47,18 +46,17 @@ public class TableTeamHomeProcessorTest {
         matchInput.setSeason("2021-22");
         matchInput.setFullTimeHomeTeamGoals("0");
         matchInput.setFullTimeAwayTeamGoals("0");
-        tableTeamHome = processor.process(matchInput);
+        matchTeamHome = processor.process(matchInput);
 
-        assertEquals(tableTeamHome.getTeamName(), "Arsenal");
-        assertEquals(tableTeamHome.getSeason(), "2021-22");
-        assertEquals(tableTeamHome.getWon(), 0);
-        assertEquals(tableTeamHome.getDrawn(), 1);
-        assertEquals(tableTeamHome.getLost(), 0);
-        assertEquals(tableTeamHome.getPoints(), 1);
-        assertEquals(tableTeamHome.getGoalsFor(), 0);
-        assertEquals(tableTeamHome.getGoalsAgainst(), 0);
-        assertEquals(tableTeamHome.getGoalsDifference(), 0);
-        assertEquals(tableTeamHome.getPlayed(), 1);
+        assertEquals("Arsenal", matchTeamHome.getTeamName());
+        assertEquals("2021-22", matchTeamHome.getSeason());
+        assertEquals(0, matchTeamHome.getWon());
+        assertEquals(1, matchTeamHome.getDrawn());
+        assertEquals(0, matchTeamHome.getLost());
+        assertEquals(1, matchTeamHome.getPoints());
+        assertEquals(0, matchTeamHome.getGoalsFor());
+        assertEquals(0, matchTeamHome.getGoalsAgainst());
+        assertEquals(0, matchTeamHome.getGoalsDifference());
     }
 
     @Test
@@ -67,17 +65,16 @@ public class TableTeamHomeProcessorTest {
         matchInput.setSeason("2021-22");
         matchInput.setFullTimeHomeTeamGoals("0");
         matchInput.setFullTimeAwayTeamGoals("1");
-        tableTeamHome = processor.process(matchInput);
+        matchTeamHome = processor.process(matchInput);
 
-        assertEquals(tableTeamHome.getTeamName(), "Arsenal");
-        assertEquals(tableTeamHome.getSeason(), "2021-22");
-        assertEquals(tableTeamHome.getWon(), 0);
-        assertEquals(tableTeamHome.getDrawn(), 0);
-        assertEquals(tableTeamHome.getLost(), 1);
-        assertEquals(tableTeamHome.getPoints(), 0);
-        assertEquals(tableTeamHome.getGoalsFor(), 0);
-        assertEquals(tableTeamHome.getGoalsAgainst(), 1);
-        assertEquals(tableTeamHome.getGoalsDifference(), -1);
-        assertEquals(tableTeamHome.getPlayed(), 1);
+        assertEquals("Arsenal", matchTeamHome.getTeamName());
+        assertEquals("2021-22", matchTeamHome.getSeason());
+        assertEquals(0, matchTeamHome.getWon());
+        assertEquals(0, matchTeamHome.getDrawn());
+        assertEquals(1, matchTeamHome.getLost());
+        assertEquals(0, matchTeamHome.getPoints());
+        assertEquals(0, matchTeamHome.getGoalsFor());
+        assertEquals(1, matchTeamHome.getGoalsAgainst());
+        assertEquals(-1, matchTeamHome.getGoalsDifference());
     }
 }
