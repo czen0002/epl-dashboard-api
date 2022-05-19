@@ -1,5 +1,6 @@
-package io.czen.epldashboardapi.data;
+package io.czen.epldashboardapi.data.processor;
 
+import io.czen.epldashboardapi.data.MatchInput;
 import io.czen.epldashboardapi.model.Match;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
