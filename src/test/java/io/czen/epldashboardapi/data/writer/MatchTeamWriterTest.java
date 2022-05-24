@@ -8,23 +8,21 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class MatchTeamHomeWriterTest {
+public class MatchTeamWriterTest {
 
     private EntityManager entityManager;
     private TableTeamRepository tableTeamRepository;
 
     @Autowired
-    public MatchTeamHomeWriterTest(
+    public MatchTeamWriterTest(
             EntityManager entityManager,
             TableTeamRepository tableTeamRepository) {
         this.entityManager = entityManager;
@@ -32,23 +30,8 @@ public class MatchTeamHomeWriterTest {
     }
 
     @Test
-    public void testFindByTeamName() {
-        entityManager.persist(new TableTeam("team1", 2, 3, 1, 12, 4,
-                8, 9, "2021-22"));
-        entityManager.persist(new TableTeam("team2", 2, 3, 1, 12, 4,
-                8, 9, "2021-22"));
-        entityManager.persist(new TableTeam("team3", 2, 3, 1, 12, 4,
-                8, 9, "2021-22"));
-        entityManager.persist(new TableTeam("team4", 2, 3, 1, 12, 4,
-                8, 9, "2021-22"));
-
-        Optional<TableTeam> tableTeam = tableTeamRepository.findByTeamName("team1");
-        Assert.assertEquals((Integer)2, tableTeam.get().getWon());
-    }
-
-    @Test
     public void writeSuccessfully() throws Exception {
-        MatchTeamHomeWriter matchTeamHomeWriter = new MatchTeamHomeWriter(entityManager);
+        MatchTeamWriter matchTeamHomeWriter = new MatchTeamWriter(entityManager);
         MatchTeam matchTeam1 = new MatchTeam(1, 0, 0, 3, 2, 1, 3);
         matchTeam1.setTeamName("Arsenal");
         matchTeam1.setSeason("2021-22");
