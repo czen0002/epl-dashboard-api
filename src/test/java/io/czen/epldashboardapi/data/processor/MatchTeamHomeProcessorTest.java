@@ -46,7 +46,7 @@ public class MatchTeamHomeProcessorTest {
         matchInput.setSeason("2021-22");
         matchInput.setFullTimeHomeTeamGoals("0");
         matchInput.setFullTimeAwayTeamGoals("0");
-        matchTeamHome = processor.process(matchInput);
+        matchTeamHome = processor.process  (matchInput);
 
         assertEquals("Arsenal", matchTeamHome.getTeamName());
         assertEquals("2021-22", matchTeamHome.getSeason());
