@@ -1,7 +1,6 @@
-package data.processor;
+package io.czen.epldashboardapi.data.processor;
 
 import io.czen.epldashboardapi.data.MatchInput;
-import io.czen.epldashboardapi.data.processor.TableTeamAwayProcessor;
 import io.czen.epldashboardapi.model.MatchTeam;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
