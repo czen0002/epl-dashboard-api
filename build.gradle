@@ -35,18 +35,13 @@ test {
 
 jacoco {
 	toolVersion = "0.8.8"
-	reportsDir = file("$buildDir/jacoco")
+	reportsDirectory = file("$buildDir/jacoco")
 }
 
 def jacocoExclusions = [];
 
 jacocoTestReport {
 	dependsOn test
-	reports {
-		xml.enabled false
-		csv.enabled false
-		html.enabled true
-	}
 	afterEvaluate {
 		classDirectories.setFrom(files(classDirectories.files.collect {
 			fileTree(dir: it, excludes: jacocoExclusions)
