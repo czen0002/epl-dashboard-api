@@ -26,6 +26,12 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TeamServiceTest {
 
+    private final String ARSENAL = "Arsenal";
+    private final String CHELSEA = "Chelsea";
+    private final String LEEDS = "Leeds";
+    private final String LIVERPOOL = "Liverpool";
+    private final String EVERTON = "Everton";
+
     private final TeamRepository teamRepository;
     private TeamService teamService;
 
@@ -36,10 +42,10 @@ public class TeamServiceTest {
 
     @BeforeAll
     public void setup() {
-        Team team1 = new Team("Arsenal");
-        Team team2 = new Team("Leeds");
-        Team team3 = new Team("Liverpool");
-        Team team4 = new Team("Chelsea");
+        Team team1 = new Team(ARSENAL);
+        Team team2 = new Team(LEEDS);
+        Team team3 = new Team(LIVERPOOL);
+        Team team4 = new Team(CHELSEA);
         Team[] teams = {team1, team2, team3, team4};
         Iterable<Team> iterableTeams = Arrays.asList(teams);
         teamRepository.saveAll(iterableTeams);
@@ -60,21 +66,21 @@ public class TeamServiceTest {
         List<Team> allTeams = new ArrayList<>();
         teamService.getAllTeams().forEach(allTeams::add);
         assertEquals(4, allTeams.size());
-        assertEquals("Arsenal", allTeams.get(0).getTeamName());
-        assertEquals("Chelsea", allTeams.get(1).getTeamName());
-        assertEquals("Leeds", allTeams.get(2).getTeamName());
-        assertEquals("Liverpool", allTeams.get(3).getTeamName());
+        assertEquals(ARSENAL, allTeams.get(0).getTeamName());
+        assertEquals(CHELSEA, allTeams.get(1).getTeamName());
+        assertEquals(LEEDS, allTeams.get(2).getTeamName());
+        assertEquals(LIVERPOOL, allTeams.get(3).getTeamName());
     }
 
     @Test
     public void shouldGetTeam() {
-        Team team = teamService.getTeam("Arsenal");
+        Team team = teamService.getTeam(ARSENAL);
         assertNotNull(team);
     }
 
     @Test
     public void shouldGetNull() {
-        Team team = teamService.getTeam("Everton");
+        Team team = teamService.getTeam(EVERTON);
         assertNull(team);
     }
 }
