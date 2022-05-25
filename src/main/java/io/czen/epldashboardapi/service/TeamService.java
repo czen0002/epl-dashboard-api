@@ -5,12 +5,10 @@ import io.czen.epldashboardapi.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class TeamService {
 
-    private TeamRepository teamRepository;
+    private final TeamRepository teamRepository;
 
     @Autowired
     public TeamService(TeamRepository teamRepository) {
