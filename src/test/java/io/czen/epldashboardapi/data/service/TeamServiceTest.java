@@ -5,7 +5,6 @@ import io.czen.epldashboardapi.repository.TeamRepository;
 import io.czen.epldashboardapi.service.TeamService;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -49,16 +48,12 @@ public class TeamServiceTest {
         Team[] teams = {team1, team2, team3, team4};
         Iterable<Team> iterableTeams = Arrays.asList(teams);
         teamRepository.saveAll(iterableTeams);
+        teamService = new TeamService(teamRepository);
     }
 
     @AfterAll
     public void cleanUp() {
         teamRepository.deleteAll();
-    }
-
-    @BeforeEach
-    public void init() {
-        teamService = new TeamService(teamRepository);
     }
 
     @Test
