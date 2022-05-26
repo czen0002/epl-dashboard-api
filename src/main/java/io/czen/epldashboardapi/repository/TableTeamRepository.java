@@ -10,5 +10,6 @@ import java.util.Optional;
 public interface TableTeamRepository extends CrudRepository<TableTeam, Long> {
 
     Optional<TableTeam> findByTeamName(String teamName);
+
     Iterable<TableTeam> findAllByOrderByPointsDesc();
 }
