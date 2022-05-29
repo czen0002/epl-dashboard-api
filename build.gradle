@@ -38,7 +38,8 @@ jacoco {
 	reportsDirectory = file("$buildDir/jacoco")
 }
 
-def jacocoExclusions = ["**/repository", "**/configuration", "**/EplDashboardApiApplication.class", "**/model"];
+def jacocoExclusions = ["**/repository", "**/configuration", "**/EplDashboardApiApplication.class",
+						"**/model", "**/data/*.class"];
 
 jacocoTestReport {
 	dependsOn test
