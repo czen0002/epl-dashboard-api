@@ -2,7 +2,6 @@ package io.czen.epldashboardapi.service;
 
 import io.czen.epldashboardapi.model.Match;
 import io.czen.epldashboardapi.repository.MatchRepository;
-import io.czen.epldashboardapi.service.MatchService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;

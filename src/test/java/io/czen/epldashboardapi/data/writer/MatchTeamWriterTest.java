@@ -35,7 +35,7 @@ public class MatchTeamWriterTest {
     }
 
     @Test
-    public void writeSuccessfully() throws Exception {
+    public void writeSuccessfully() {
         MatchTeamWriter matchTeamHomeWriter = new MatchTeamWriter(entityManager);
         MatchTeam matchTeam1 = new MatchTeam(1, 0, 0, 3, 2, 1, 3);
         matchTeam1.setTeamName(ARSENAL);

@@ -21,7 +21,7 @@ public class MatchTeamHomeProcessorTest {
     }
 
     @Test
-    public void processMatchHomeTeamWon() throws Exception {
+    public void processMatchHomeTeamWon() {
         matchInput.setHomeTeam("Arsenal");
         matchInput.setSeason("2021-22");
         matchInput.setFullTimeHomeTeamGoals("3");
@@ -40,7 +40,7 @@ public class MatchTeamHomeProcessorTest {
     }
 
     @Test
-    public void processMatchHomeTeamDrawn() throws Exception {
+    public void processMatchHomeTeamDrawn() {
         matchInput.setHomeTeam("Arsenal");
         matchInput.setSeason("2021-22");
         matchInput.setFullTimeHomeTeamGoals("0");
@@ -59,7 +59,7 @@ public class MatchTeamHomeProcessorTest {
     }
 
     @Test
-    public void processMatchHomeTeamLost() throws Exception {
+    public void processMatchHomeTeamLost() {
         matchInput.setHomeTeam("Arsenal");
         matchInput.setSeason("2021-22");
         matchInput.setFullTimeHomeTeamGoals("0");

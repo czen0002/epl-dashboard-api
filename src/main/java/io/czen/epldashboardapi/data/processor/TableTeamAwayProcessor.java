@@ -2,16 +2,12 @@ package io.czen.epldashboardapi.data.processor;
 
 import io.czen.epldashboardapi.data.MatchInput;
 import io.czen.epldashboardapi.model.MatchTeam;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemProcessor;
 
 public class TableTeamAwayProcessor implements ItemProcessor<MatchInput, MatchTeam> {
 
-    private static final Logger log = LoggerFactory.getLogger(TableTeamAwayProcessor.class);
-
     @Override
-    public MatchTeam process(MatchInput matchInput) throws Exception {
+    public MatchTeam process(MatchInput matchInput) {
         MatchTeam matchTeamAway = new MatchTeam(0, 0, 0, 0, 0, 0, 0);
         matchTeamAway.setTeamName(matchInput.getAwayTeam());
         matchTeamAway.setSeason(matchInput.getSeason());

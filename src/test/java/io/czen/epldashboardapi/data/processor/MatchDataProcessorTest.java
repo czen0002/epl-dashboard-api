@@ -22,7 +22,7 @@ public class MatchDataProcessorTest {
     }
 
     @Test
-    public void processMatchInput() throws Exception {
+    public void processMatchInput() {
         matchInput.setId("1");
         matchInput.setSeason("2021-22");
         matchInput.setDate("2021-10-03");

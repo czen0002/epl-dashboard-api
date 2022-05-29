@@ -19,7 +19,7 @@ public class MatchTeamWriter implements ItemWriter<MatchTeam> {
     }
 
     @Override
-    public void write(List<? extends MatchTeam> matchTeams) throws Exception {
+    public void write(List<? extends MatchTeam> matchTeams) {
         for (MatchTeam matchTeam : matchTeams) {
             updateTableTeam(matchTeam);
         }

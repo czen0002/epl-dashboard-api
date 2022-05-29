@@ -21,7 +21,7 @@ public class MatchTeamAwayProcessorTest {
     }
 
     @Test
-    public void processMatchAwayTeamWon() throws Exception {
+    public void processMatchAwayTeamWon() {
         matchInput.setAwayTeam("Arsenal");
         matchInput.setSeason("2021-22");
         matchInput.setFullTimeHomeTeamGoals("0");
@@ -40,7 +40,7 @@ public class MatchTeamAwayProcessorTest {
     }
 
     @Test
-    public void processMatchAwayTeamDrawn() throws Exception {
+    public void processMatchAwayTeamDrawn() {
         matchInput.setAwayTeam("Arsenal");
         matchInput.setSeason("2021-22");
         matchInput.setFullTimeHomeTeamGoals("2");
@@ -59,7 +59,7 @@ public class MatchTeamAwayProcessorTest {
     }
 
     @Test
-    public void processMatchAwayTeamLost() throws Exception {
+    public void processMatchAwayTeamLost() {
         matchInput.setAwayTeam("Arsenal");
         matchInput.setSeason("2021-22");
         matchInput.setFullTimeHomeTeamGoals("3");
