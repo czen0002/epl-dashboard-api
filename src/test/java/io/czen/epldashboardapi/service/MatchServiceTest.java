@@ -1,4 +1,4 @@
-package io.czen.epldashboardapi.data.service;
+package io.czen.epldashboardapi.service;
 
 import io.czen.epldashboardapi.model.Match;
 import io.czen.epldashboardapi.repository.MatchRepository;
