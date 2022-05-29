@@ -37,10 +37,9 @@ public class TeamControllerTest {
         Team team1 = new Team("Arsenal");
         Team team2 = new Team("Chelsea");
         Iterable<Team> iterableTeams = Arrays.asList(team1, team2);
-        when(teamService.getAllTeams()).thenReturn(iterableTeams);
-
+        when(teamService.getAllTeamsOrderByTeamName()).thenReturn(iterableTeams);
         List<Team> result = new ArrayList<>();
-        teamController.getAllTeam().forEach(result::add);
+        teamController.getAllTeamOrderByTeamName().forEach(result::add);
 
         assertEquals("Arsenal", result.get(0).getTeamName());
         assertEquals("Chelsea", result.get(1).getTeamName());
@@ -52,9 +51,7 @@ public class TeamControllerTest {
         Match match2 = new Match("Arsenal", "Liverpool", "W");
         List<Match> matches = Arrays.asList(match1, match2);
         when(matchService.getMatchesBySeason(anyString(), anyString())).thenReturn(matches);
-
-        List<Match> results = new ArrayList<>();
-        teamController.getMatchesForTeamInSeason("Arsenal", "2021-22").forEach(results::add);
+        List<Match> results = new ArrayList<>(teamController.getMatchesForTeamInSeason("Arsenal", "2021-22"));
 
         assertEquals(2, results.size());
         assertEquals("Arsenal", results.get(0).getHomeTeam());
@@ -65,11 +62,10 @@ public class TeamControllerTest {
     public void shouldGetTeam() {
         Match match1 = new Match("Arsenal", "Chelsea", "W");
         Match match2 = new Match("Arsenal", "Liverpool", "W");
-        Team team1 = new Team("Arsenal");
+        Team team = new Team("Arsenal");
         List<Match> matches = Arrays.asList(match1, match2);
-        when(matchService.getLatestMatchesByTeam(anyString(), anyInt())).thenReturn(matches);
-        when(teamService.getTeam(anyString())).thenReturn(team1);
-
+        team.setMatches(matches);
+        when(teamService.getTeamWithMatches(anyString(), anyInt())).thenReturn(team);
         Team result = teamController.getTeam("Arsenal", 2);
 
         assertEquals(2, result.getMatches().size());
@@ -79,8 +75,7 @@ public class TeamControllerTest {
     }
 
     @Test void shouldGetTeamNull() {
-        when(teamService.getTeam(anyString())).thenReturn(null);
-
+        when(teamService.getTeamWithMatches(anyString(), anyInt())).thenReturn(null);
         Team result = teamController.getTeam("Arsenal", 2);
 
         assertNull(result);

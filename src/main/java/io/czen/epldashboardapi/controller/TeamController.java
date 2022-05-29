@@ -13,8 +13,8 @@ import java.util.List;
 @CrossOrigin
 public class TeamController {
 
-    private TeamService teamService;
-    private MatchService matchService;
+    private final TeamService teamService;
+    private final MatchService matchService;
 
     @Autowired
     public TeamController(TeamService teamService, MatchService matchService) {
@@ -23,8 +23,8 @@ public class TeamController {
     }
 
     @GetMapping(value = "/team")
-    public Iterable<Team> getAllTeam() {
-        return this.teamService.getAllTeams();
+    public Iterable<Team> getAllTeamOrderByTeamName() {
+        return this.teamService.getAllTeamsOrderByTeamName();
     }
 
     @GetMapping(value = "/team/{teamName}/matches")
@@ -34,9 +34,6 @@ public class TeamController {
 
     @GetMapping(value = "/team/{teamName}")
     public Team getTeam(@PathVariable String teamName, @RequestParam int count) {
-        Team team = this.teamService.getTeam(teamName);
-        if (team != null) team.setMatches(this.matchService.getLatestMatchesByTeam(teamName, count));
-
-        return team;
+        return this.teamService.getTeamWithMatches(teamName, count);
     }
 }
