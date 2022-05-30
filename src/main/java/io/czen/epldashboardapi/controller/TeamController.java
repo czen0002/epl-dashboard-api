@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
+@RequestMapping(value = "/v1")
 public class TeamController {
 
     private final TeamService teamService;
