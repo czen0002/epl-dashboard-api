@@ -2,7 +2,7 @@ package io.czen.epldashboardapi.data.processor;
 
 
 import io.czen.epldashboardapi.data.MatchInput;
-import io.czen.epldashboardapi.model.Match;
+import io.czen.epldashboardapi.entity.MatchEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -48,30 +48,30 @@ public class MatchDataProcessorTest {
         matchInput.setHomeTeamRedCards("0");
         matchInput.setAwayTeamRedCards("0");
 
-        Match match = processor.process(matchInput);
-        assertEquals(1, match.getId());
-        assertEquals("2021-22", match.getSeason());
-        assertEquals(LocalDate.of(2021, 10, 3), match.getDate());
-        assertEquals("Arsenal", match.getHomeTeam());
-        assertEquals("Chelsea", match.getAwayTeam());
-        assertEquals("0", match.getFullTimeHomeTeamGoals());
-        assertEquals("0", match.getFullTimeAwayTeamGoals());
-        assertEquals("D", match.getFullTimeResult());
-        assertEquals("0", match.getHalfTimeHomeTeamGoals());
-        assertEquals("0", match.getHalfTimeAwayTeamGoals());
-        assertEquals("D", match.getHalfTimeResult());
-        assertEquals("S Attwell", match.getReferee());
-        assertEquals("18", match.getHomeTeamShots());
-        assertEquals("11", match.getAwayTeamShots());
-        assertEquals("6", match.getHomeTeamShotsOnTarget());
-        assertEquals("4", match.getAwayTeamShotsOnTarget());
-        assertEquals("3", match.getHomeTeamCorners());
-        assertEquals("4", match.getAwayTeamCorners());
-        assertEquals("11", match.getHomeTeamFoulsCommitted());
-        assertEquals("12", match.getAwayTeamFoulsCommitted());
-        assertEquals("1", match.getHomeTeamYellowCards());
-        assertEquals("2", match.getAwayTeamYellowCards());
-        assertEquals("0", match.getHomeTeamRedCards());
-        assertEquals("0", match.getAwayTeamRedCards());
+        MatchEntity matchEntity = processor.process(matchInput);
+        assertEquals(1, matchEntity.getId());
+        assertEquals("2021-22", matchEntity.getSeason());
+        assertEquals(LocalDate.of(2021, 10, 3), matchEntity.getDate());
+        assertEquals("Arsenal", matchEntity.getHomeTeam());
+        assertEquals("Chelsea", matchEntity.getAwayTeam());
+        assertEquals("0", matchEntity.getFullTimeHomeTeamGoals());
+        assertEquals("0", matchEntity.getFullTimeAwayTeamGoals());
+        assertEquals("D", matchEntity.getFullTimeResult());
+        assertEquals("0", matchEntity.getHalfTimeHomeTeamGoals());
+        assertEquals("0", matchEntity.getHalfTimeAwayTeamGoals());
+        assertEquals("D", matchEntity.getHalfTimeResult());
+        assertEquals("S Attwell", matchEntity.getReferee());
+        assertEquals("18", matchEntity.getHomeTeamShots());
+        assertEquals("11", matchEntity.getAwayTeamShots());
+        assertEquals("6", matchEntity.getHomeTeamShotsOnTarget());
+        assertEquals("4", matchEntity.getAwayTeamShotsOnTarget());
+        assertEquals("3", matchEntity.getHomeTeamCorners());
+        assertEquals("4", matchEntity.getAwayTeamCorners());
+        assertEquals("11", matchEntity.getHomeTeamFoulsCommitted());
+        assertEquals("12", matchEntity.getAwayTeamFoulsCommitted());
+        assertEquals("1", matchEntity.getHomeTeamYellowCards());
+        assertEquals("2", matchEntity.getAwayTeamYellowCards());
+        assertEquals("0", matchEntity.getHomeTeamRedCards());
+        assertEquals("0", matchEntity.getAwayTeamRedCards());
     }
 }

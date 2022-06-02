@@ -1,7 +1,7 @@
 package io.czen.epldashboardapi.controller;
 
-import io.czen.epldashboardapi.model.Match;
-import io.czen.epldashboardapi.model.Team;
+import io.czen.epldashboardapi.entity.MatchEntity;
+import io.czen.epldashboardapi.entity.TeamEntity;
 import io.czen.epldashboardapi.service.MatchService;
 import io.czen.epldashboardapi.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,17 +24,17 @@ public class TeamController {
     }
 
     @GetMapping(value = "/team")
-    public Iterable<Team> getAllTeamOrderByTeamName() {
+    public Iterable<TeamEntity> getAllTeamOrderByTeamName() {
         return this.teamService.getAllTeamsOrderByTeamName();
     }
 
     @GetMapping(value = "/team/{teamName}/matches")
-    public List<Match> getMatchesForTeamInSeason(@PathVariable String teamName, @RequestParam String season) {
+    public List<MatchEntity> getMatchesForTeamInSeason(@PathVariable String teamName, @RequestParam String season) {
         return this.matchService.getMatchesBySeason(teamName, season);
     }
 
     @GetMapping(value = "/team/{teamName}")
-    public Team getTeam(@PathVariable String teamName, @RequestParam int count) {
+    public TeamEntity getTeam(@PathVariable String teamName, @RequestParam int count) {
         return this.teamService.getTeamWithMatches(teamName, count);
     }
 }

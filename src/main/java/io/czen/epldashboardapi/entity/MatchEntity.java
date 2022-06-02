@@ -1,20 +1,17 @@
-package io.czen.epldashboardapi.model;
+package io.czen.epldashboardapi.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Getter
 @Setter
 @Entity
 @NoArgsConstructor
-public class Match {
+public class MatchEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -43,7 +40,7 @@ public class Match {
     private String homeTeamRedCards;
     private String awayTeamRedCards;
 
-    public Match(String homeTeam, String awayTeam, String fullTimeResult) {
+    public MatchEntity(String homeTeam, String awayTeam, String fullTimeResult) {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         this.fullTimeResult = fullTimeResult;

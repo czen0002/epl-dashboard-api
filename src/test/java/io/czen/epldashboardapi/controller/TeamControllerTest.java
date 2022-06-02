@@ -1,7 +1,7 @@
 package io.czen.epldashboardapi.controller;
 
-import io.czen.epldashboardapi.model.Match;
-import io.czen.epldashboardapi.model.Team;
+import io.czen.epldashboardapi.entity.MatchEntity;
+import io.czen.epldashboardapi.entity.TeamEntity;
 import io.czen.epldashboardapi.service.MatchService;
 import io.czen.epldashboardapi.service.TeamService;
 import org.junit.jupiter.api.Test;
@@ -34,11 +34,11 @@ public class TeamControllerTest {
 
     @Test
     public void shouldGetAllTeam() {
-        Team team1 = new Team("Arsenal");
-        Team team2 = new Team("Chelsea");
-        Iterable<Team> iterableTeams = Arrays.asList(team1, team2);
+        TeamEntity teamEntity1 = new TeamEntity("Arsenal");
+        TeamEntity teamEntity2 = new TeamEntity("Chelsea");
+        Iterable<TeamEntity> iterableTeams = Arrays.asList(teamEntity1, teamEntity2);
         when(teamService.getAllTeamsOrderByTeamName()).thenReturn(iterableTeams);
-        List<Team> result = new ArrayList<>();
+        List<TeamEntity> result = new ArrayList<>();
         teamController.getAllTeamOrderByTeamName().forEach(result::add);
 
         assertEquals("Arsenal", result.get(0).getTeamName());
@@ -47,11 +47,11 @@ public class TeamControllerTest {
 
     @Test
     public void shouldGetMatchesForTeamInSeason() {
-        Match match1 = new Match("Arsenal", "Chelsea", "W");
-        Match match2 = new Match("Arsenal", "Liverpool", "W");
-        List<Match> matches = Arrays.asList(match1, match2);
-        when(matchService.getMatchesBySeason(anyString(), anyString())).thenReturn(matches);
-        List<Match> results = new ArrayList<>(teamController.getMatchesForTeamInSeason("Arsenal", "2021-22"));
+        MatchEntity matchEntity1 = new MatchEntity("Arsenal", "Chelsea", "W");
+        MatchEntity matchEntity2 = new MatchEntity("Arsenal", "Liverpool", "W");
+        List<MatchEntity> matchEntities = Arrays.asList(matchEntity1, matchEntity2);
+        when(matchService.getMatchesBySeason(anyString(), anyString())).thenReturn(matchEntities);
+        List<MatchEntity> results = new ArrayList<>(teamController.getMatchesForTeamInSeason("Arsenal", "2021-22"));
 
         assertEquals(2, results.size());
         assertEquals("Arsenal", results.get(0).getHomeTeam());
@@ -60,23 +60,23 @@ public class TeamControllerTest {
     }
     @Test
     public void shouldGetTeam() {
-        Match match1 = new Match("Arsenal", "Chelsea", "W");
-        Match match2 = new Match("Arsenal", "Liverpool", "W");
-        Team team = new Team("Arsenal");
-        List<Match> matches = Arrays.asList(match1, match2);
-        team.setMatches(matches);
-        when(teamService.getTeamWithMatches(anyString(), anyInt())).thenReturn(team);
-        Team result = teamController.getTeam("Arsenal", 2);
+        MatchEntity matchEntity1 = new MatchEntity("Arsenal", "Chelsea", "W");
+        MatchEntity matchEntity2 = new MatchEntity("Arsenal", "Liverpool", "W");
+        TeamEntity teamEntity = new TeamEntity("Arsenal");
+        List<MatchEntity> matchEntities = Arrays.asList(matchEntity1, matchEntity2);
+        teamEntity.setMatchEntities(matchEntities);
+        when(teamService.getTeamWithMatches(anyString(), anyInt())).thenReturn(teamEntity);
+        TeamEntity result = teamController.getTeam("Arsenal", 2);
 
-        assertEquals(2, result.getMatches().size());
-        assertEquals("Arsenal", result.getMatches().get(1).getHomeTeam());
-        assertEquals("Liverpool", result.getMatches().get(1).getAwayTeam());
-        assertEquals("W", result.getMatches().get(1).getFullTimeResult());
+        assertEquals(2, result.getMatchEntities().size());
+        assertEquals("Arsenal", result.getMatchEntities().get(1).getHomeTeam());
+        assertEquals("Liverpool", result.getMatchEntities().get(1).getAwayTeam());
+        assertEquals("W", result.getMatchEntities().get(1).getFullTimeResult());
     }
 
     @Test void shouldGetTeamNull() {
         when(teamService.getTeamWithMatches(anyString(), anyInt())).thenReturn(null);
-        Team result = teamController.getTeam("Arsenal", 2);
+        TeamEntity result = teamController.getTeam("Arsenal", 2);
 
         assertNull(result);
     }

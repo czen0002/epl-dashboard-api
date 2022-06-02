@@ -1,4 +1,4 @@
-package io.czen.epldashboardapi.model;
+package io.czen.epldashboardapi.entity;
 
 import lombok.*;
 
@@ -9,7 +9,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Team {
+public class TeamEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,9 +17,9 @@ public class Team {
     private String teamName;
 
     @Transient
-    private List<Match> matches;
+    private List<MatchEntity> matchEntities;
 
-    public Team(String teamName) {
+    public TeamEntity(String teamName) {
         this.teamName = teamName;
     }
 }

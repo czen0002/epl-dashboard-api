@@ -6,7 +6,7 @@ import io.czen.epldashboardapi.data.processor.MatchDataProcessor;
 import io.czen.epldashboardapi.data.processor.TableTeamAwayProcessor;
 import io.czen.epldashboardapi.data.processor.TableTeamHomeProcessor;
 import io.czen.epldashboardapi.data.writer.MatchTeamWriter;
-import io.czen.epldashboardapi.model.Match;
+import io.czen.epldashboardapi.entity.MatchEntity;
 import io.czen.epldashboardapi.model.MatchTeam;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -75,8 +75,8 @@ public class BatchConfig {
     }
 
     @Bean
-    public JdbcBatchItemWriter<Match> writeMatch(DataSource dataSource) {
-        return new JdbcBatchItemWriterBuilder<Match>()
+    public JdbcBatchItemWriter<MatchEntity> writeMatch(DataSource dataSource) {
+        return new JdbcBatchItemWriterBuilder<MatchEntity>()
                 .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
                 .sql("INSERT INTO match(id, season, date, home_team, away_team, full_time_home_team_goals, " +
                         "full_time_away_team_goals, full_time_result, half_time_home_team_goals, half_time_away_team_goals, " +
@@ -113,10 +113,10 @@ public class BatchConfig {
     }
 
     @Bean
-    public Step writeMatchStep(ItemProcessor<MatchInput, Match> matchDataProcessor,
-                               JdbcBatchItemWriter<Match> writeMatch) {
+    public Step writeMatchStep(ItemProcessor<MatchInput, MatchEntity> matchDataProcessor,
+                               JdbcBatchItemWriter<MatchEntity> writeMatch) {
         return stepBuilderFactory.get("writeMatchStep")
-                .<MatchInput, Match> chunk(10)
+                .<MatchInput, MatchEntity> chunk(10)
                 .reader(reader())
                 .processor(matchDataProcessor)
                 .writer(writeMatch)

@@ -1,6 +1,6 @@
 package io.czen.epldashboardapi.data;
 
-import io.czen.epldashboardapi.model.Team;
+import io.czen.epldashboardapi.entity.TeamEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.BatchStatus;
@@ -31,12 +31,12 @@ public class JobCompletionNotificationListener extends JobExecutionListenerSuppo
     public void afterJob(JobExecution jobExecution) {
         if(jobExecution.getStatus() == BatchStatus.COMPLETED) {
             log.info("!!! JOB FINISHED! Time to verify the results");
-            Map<String, Team> teamData = new HashMap<>();
+            Map<String, TeamEntity> teamData = new HashMap<>();
 
             em.createQuery("select distinct(m.homeTeam) from Match m", String.class)
                     .getResultList()
                     .stream()
-                    .map(e -> new Team(e))
+                    .map(e -> new TeamEntity(e))
                     .forEach(team -> teamData.put(team.getTeamName(), team));
 
             teamData.values().forEach(team -> em.persist(team));

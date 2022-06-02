@@ -1,6 +1,6 @@
 package io.czen.epldashboardapi.service;
 
-import io.czen.epldashboardapi.model.Match;
+import io.czen.epldashboardapi.entity.MatchEntity;
 import io.czen.epldashboardapi.repository.MatchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,11 +17,11 @@ public class MatchService {
         this.matchRepository = matchRepository;
     }
 
-    public List<Match> getMatchesBySeason(String teamName, String season) {
+    public List<MatchEntity> getMatchesBySeason(String teamName, String season) {
         return this.matchRepository.getMatchesByTeamBySeason(teamName, season);
     }
 
-    public List<Match> getLatestMatchesByTeam(String teamName, int count) {
+    public List<MatchEntity> getLatestMatchesByTeam(String teamName, int count) {
         return this.matchRepository.getLatestMatchesByTeam(teamName, count);
     }
 }

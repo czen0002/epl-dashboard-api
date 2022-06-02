@@ -1,6 +1,6 @@
 package io.czen.epldashboardapi.service;
 
-import io.czen.epldashboardapi.model.Team;
+import io.czen.epldashboardapi.entity.TeamEntity;
 import io.czen.epldashboardapi.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,17 +17,17 @@ public class TeamService {
         this.matchService = matchService;
     }
 
-    public Iterable<Team> getAllTeamsOrderByTeamName() {
+    public Iterable<TeamEntity> getAllTeamsOrderByTeamName() {
         return this.teamRepository.findAllByOrderByTeamName();
     }
 
-    public Team getTeam(String teamName) {
+    public TeamEntity getTeam(String teamName) {
         return this.teamRepository.findByTeamName(teamName).orElse(null);
     }
 
-    public Team getTeamWithMatches(String teamName, int count) {
-        Team team = this.teamRepository.findByTeamName(teamName).orElse(null);
-        if (team != null) team.setMatches(this.matchService.getLatestMatchesByTeam(teamName, count));
-        return team;
+    public TeamEntity getTeamWithMatches(String teamName, int count) {
+        TeamEntity teamEntity = this.teamRepository.findByTeamName(teamName).orElse(null);
+        if (teamEntity != null) teamEntity.setMatchEntities(this.matchService.getLatestMatchesByTeam(teamName, count));
+        return teamEntity;
     }
 }

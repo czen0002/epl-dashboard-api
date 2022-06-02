@@ -1,7 +1,7 @@
 package io.czen.epldashboardapi.service;
 
-import io.czen.epldashboardapi.model.Match;
-import io.czen.epldashboardapi.model.Team;
+import io.czen.epldashboardapi.entity.MatchEntity;
+import io.czen.epldashboardapi.entity.TeamEntity;
 import io.czen.epldashboardapi.repository.TeamRepository;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.Test;
@@ -43,13 +43,13 @@ public class TeamServiceTest {
 
     @Test
     public void shouldGetAllTeamsOrderByTeamName() {
-        Team team1 = new Team(ARSENAL);
-        Team team2 = new Team(LEEDS);
-        Team team3 = new Team(LIVERPOOL);
-        Team team4 = new Team(CHELSEA);
-        Iterable<Team> iterableTeams = Arrays.asList(team1, team4, team2, team3);
+        TeamEntity teamEntity1 = new TeamEntity(ARSENAL);
+        TeamEntity teamEntity2 = new TeamEntity(LEEDS);
+        TeamEntity teamEntity3 = new TeamEntity(LIVERPOOL);
+        TeamEntity teamEntity4 = new TeamEntity(CHELSEA);
+        Iterable<TeamEntity> iterableTeams = Arrays.asList(teamEntity1, teamEntity4, teamEntity2, teamEntity3);
         when(teamRepository.findAllByOrderByTeamName()).thenReturn(iterableTeams);
-        List<Team> result = new ArrayList<>();
+        List<TeamEntity> result = new ArrayList<>();
         teamService.getAllTeamsOrderByTeamName().forEach(result::add);
 
         assertEquals(4, result.size());
@@ -61,32 +61,32 @@ public class TeamServiceTest {
 
     @Test
     public void shouldGetTeam() {
-        Team team = new Team(ARSENAL);
-        when(teamRepository.findByTeamName(anyString())).thenReturn(Optional.of(team));
-        Team result = teamService.getTeam(anyString());
+        TeamEntity teamEntity = new TeamEntity(ARSENAL);
+        when(teamRepository.findByTeamName(anyString())).thenReturn(Optional.of(teamEntity));
+        TeamEntity result = teamService.getTeam(anyString());
 
         assertEquals(ARSENAL, result.getTeamName());
     }
 
     @Test
     public void shouldGetTeamWithMatches() {
-        Team team = new Team(ARSENAL);
-        Match match1 = new Match(ARSENAL, CHELSEA, "W");
-        Match match2 = new Match(ARSENAL, LIVERPOOL, "W");
-        Match match3 = new Match(ARSENAL, LEEDS, "D");
-        List<Match> matches = Arrays.asList(match1, match2, match3);
-        when(teamRepository.findByTeamName(anyString())).thenReturn(Optional.of(team));
-        when(matchService.getLatestMatchesByTeam(anyString(), anyInt())).thenReturn(matches);
-        Team result = teamService.getTeamWithMatches(ARSENAL, 3);
+        TeamEntity teamEntity = new TeamEntity(ARSENAL);
+        MatchEntity matchEntity1 = new MatchEntity(ARSENAL, CHELSEA, "W");
+        MatchEntity matchEntity2 = new MatchEntity(ARSENAL, LIVERPOOL, "W");
+        MatchEntity matchEntity3 = new MatchEntity(ARSENAL, LEEDS, "D");
+        List<MatchEntity> matchEntities = Arrays.asList(matchEntity1, matchEntity2, matchEntity3);
+        when(teamRepository.findByTeamName(anyString())).thenReturn(Optional.of(teamEntity));
+        when(matchService.getLatestMatchesByTeam(anyString(), anyInt())).thenReturn(matchEntities);
+        TeamEntity result = teamService.getTeamWithMatches(ARSENAL, 3);
 
         assertEquals(ARSENAL, result.getTeamName());
-        assertEquals(3, result.getMatches().size());
+        assertEquals(3, result.getMatchEntities().size());
     }
 
     @Test
     public void shouldGetNullTeam() {
         when(teamRepository.findByTeamName(anyString())).thenReturn(Optional.empty());
-        Team result = teamService.getTeamWithMatches(ARSENAL, 3);
+        TeamEntity result = teamService.getTeamWithMatches(ARSENAL, 3);
 
         assertNull(result);
     }

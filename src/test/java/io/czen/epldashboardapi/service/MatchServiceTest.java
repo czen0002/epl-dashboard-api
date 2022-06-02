@@ -1,6 +1,6 @@
 package io.czen.epldashboardapi.service;
 
-import io.czen.epldashboardapi.model.Match;
+import io.czen.epldashboardapi.entity.MatchEntity;
 import io.czen.epldashboardapi.repository.MatchRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterAll;
@@ -41,16 +41,16 @@ public class MatchServiceTest {
 
     @BeforeAll
     public void setup() {
-        Match match1 = new Match(ARSENAL, CHELSEA, HOME_WON);
-        match1.setSeason(SEASON);
-        Match match2 = new Match(ARSENAL, LEEDS, HOME_DRAWN);
-        match2.setSeason(SEASON);
-        Match match3 = new Match(ARSENAL, LIVERPOOL, HOME_LOST);
-        match3.setSeason(SEASON);
-        Match match4 = new Match(CHELSEA, LIVERPOOL, HOME_DRAWN);
-        match4.setSeason(SEASON);
-        Match[] matches = {match1, match2, match3, match4};
-        Iterable<Match> iterableMatches = Arrays.asList(matches);
+        MatchEntity matchEntity1 = new MatchEntity(ARSENAL, CHELSEA, HOME_WON);
+        matchEntity1.setSeason(SEASON);
+        MatchEntity matchEntity2 = new MatchEntity(ARSENAL, LEEDS, HOME_DRAWN);
+        matchEntity2.setSeason(SEASON);
+        MatchEntity matchEntity3 = new MatchEntity(ARSENAL, LIVERPOOL, HOME_LOST);
+        matchEntity3.setSeason(SEASON);
+        MatchEntity matchEntity4 = new MatchEntity(CHELSEA, LIVERPOOL, HOME_DRAWN);
+        matchEntity4.setSeason(SEASON);
+        MatchEntity[] matchEntities = {matchEntity1, matchEntity2, matchEntity3, matchEntity4};
+        Iterable<MatchEntity> iterableMatches = Arrays.asList(matchEntities);
         matchRepository.saveAll(iterableMatches);
         matchService = new MatchService(matchRepository);
     }
@@ -62,19 +62,19 @@ public class MatchServiceTest {
 
     @Test
     public void shouldGetMatchesBySeason() {
-        List<Match> matchesBySeason = matchService.getMatchesBySeason(ARSENAL, SEASON);
+        List<MatchEntity> matchesBySeason = matchService.getMatchesBySeason(ARSENAL, SEASON);
         assertEquals(3, matchesBySeason.size());
     }
 
     @Test
     public void shouldGetEmptyMatchesBySeason() {
-        List<Match> matchesBySeason = matchService.getMatchesBySeason(EVERTON, SEASON);
+        List<MatchEntity> matchesBySeason = matchService.getMatchesBySeason(EVERTON, SEASON);
         assertEquals(0, matchesBySeason.size());
     }
 
     @Test
     public void shouldGetTwoLatestMatchesByTeam() {
-        List<Match> latestTwoMatches = matchService.getLatestMatchesByTeam(ARSENAL, 2);
-        assertEquals(2, latestTwoMatches.size());
+        List<MatchEntity> latestTwoMatchEntities = matchService.getLatestMatchesByTeam(ARSENAL, 2);
+        assertEquals(2, latestTwoMatchEntities.size());
     }
 }

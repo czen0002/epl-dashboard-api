@@ -1,4 +1,4 @@
-package io.czen.epldashboardapi.model;
+package io.czen.epldashboardapi.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +13,7 @@ import javax.persistence.Id;
 @Setter
 @Entity
 @NoArgsConstructor
-public class TableTeam {
+public class RankingTableTeamEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,8 +29,8 @@ public class TableTeam {
     private Integer points;
     private String season;
 
-    public TableTeam(String teamName, Integer won, Integer drawn, Integer lost, Integer goalsFor,
-                     Integer goalsAgainst, Integer goalsDifference, Integer points, String season) {
+    public RankingTableTeamEntity(String teamName, Integer won, Integer drawn, Integer lost, Integer goalsFor,
+                                  Integer goalsAgainst, Integer goalsDifference, Integer points, String season) {
         this.teamName = teamName;
         this.played = 1;
         this.won = won;

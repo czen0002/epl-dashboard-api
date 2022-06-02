@@ -1,15 +1,15 @@
 package io.czen.epldashboardapi.repository;
 
-import io.czen.epldashboardapi.model.Team;
+import io.czen.epldashboardapi.entity.TeamEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface TeamRepository extends CrudRepository<Team, Long> {
+public interface TeamRepository extends CrudRepository<TeamEntity, Long> {
 
-    Iterable<Team> findAllByOrderByTeamName();
+    Iterable<TeamEntity> findAllByOrderByTeamName();
 
-    Optional<Team> findByTeamName(String teamName);
+    Optional<TeamEntity> findByTeamName(String teamName);
 }

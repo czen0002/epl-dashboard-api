@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class MatchTeamAwayProcessorTest {
+public class TableTeamAwayProcessorTest {
 
     private TableTeamAwayProcessor processor;
     private MatchTeam matchTeamAway;
