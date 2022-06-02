@@ -5,6 +5,7 @@ import io.czen.epldashboardapi.data.MatchInput;
 import io.czen.epldashboardapi.data.processor.MatchDataProcessor;
 import io.czen.epldashboardapi.data.processor.TableTeamAwayProcessor;
 import io.czen.epldashboardapi.data.processor.TableTeamHomeProcessor;
+import io.czen.epldashboardapi.data.writer.MatchTeamWriter;
 import io.czen.epldashboardapi.model.Match;
 import io.czen.epldashboardapi.model.MatchTeam;
 import org.springframework.batch.core.Job;
@@ -25,6 +26,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
+import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 
 @Configuration
@@ -73,7 +75,7 @@ public class BatchConfig {
     }
 
     @Bean
-    public JdbcBatchItemWriter<Match> writer1(DataSource dataSource) {
+    public JdbcBatchItemWriter<Match> writeMatch(DataSource dataSource) {
         return new JdbcBatchItemWriterBuilder<Match>()
                 .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
                 .sql("INSERT INTO match(id, season, date, home_team, away_team, full_time_home_team_goals, " +
@@ -91,62 +93,55 @@ public class BatchConfig {
                 .build();
     }
 
-//    @Bean
-//    public JdbcBatchItemWriter<TableTeam> writer2(DataSource dataSource) {
-//        return new JdbcBatchItemWriterBuilder<TableTeam>()
-//                .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
-//                .sql("")
-//                .dataSource(dataSource)
-//                .build();
-//    }
-//
-//    @Bean
-//    public JdbcBatchItemWriter<TableTeam> writer3(DataSource dataSource) {
-//        return new JdbcBatchItemWriterBuilder<TableTeam>()
-//                .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
-//                .sql("")
-//                .dataSource(dataSource)
-//                .build();
-//    }
+    @Bean
+    @Autowired
+    public MatchTeamWriter writeMatchTeam(EntityManager entityManager) {
+        return new MatchTeamWriter(entityManager);
+    }
 
     @Bean
-    public Job importUserJob(JobCompletionNotificationListener listener, Step step1, Step step2, Step step3) {
-        return jobBuilderFactory.get("importUserJob")
+    public Job importMatchJob(
+            JobCompletionNotificationListener listener, Step writeMatchStep, Step writeTableHomeTeamStep,
+            Step writeTableAwayTeamStep) {
+        return jobBuilderFactory.get("importMatchJob")
                 .incrementer(new RunIdIncrementer())
                 .listener(listener)
-                .start(step1)
-                .next(step2)
-                .next(step3)
+                .start(writeMatchStep)
+                .next(writeTableHomeTeamStep)
+                .next(writeTableAwayTeamStep)
                 .build();
     }
 
     @Bean
-    public Step step1(ItemProcessor<MatchInput, Match> matchDataProcessor, JdbcBatchItemWriter<Match> writer1) {
-        return stepBuilderFactory.get("step1")
+    public Step writeMatchStep(ItemProcessor<MatchInput, Match> matchDataProcessor,
+                               JdbcBatchItemWriter<Match> writeMatch) {
+        return stepBuilderFactory.get("writeMatchStep")
                 .<MatchInput, Match> chunk(10)
                 .reader(reader())
                 .processor(matchDataProcessor)
-                .writer(writer1)
+                .writer(writeMatch)
                 .build();
     }
 
     @Bean
-    public Step step2(ItemProcessor<MatchInput, MatchTeam> tableTeamHomeProcessor, JdbcBatchItemWriter<MatchTeam> writer2) {
-        return stepBuilderFactory.get("step2")
+    public Step writeTableHomeTeamStep(ItemProcessor<MatchInput, MatchTeam> tableTeamHomeProcessor,
+                                       MatchTeamWriter writeMatchTeam) {
+        return stepBuilderFactory.get("writeTableHomeTeamStep")
                 .<MatchInput, MatchTeam> chunk(10)
                 .reader(reader())
                 .processor(tableTeamHomeProcessor)
-                .writer(writer2)
+                .writer(writeMatchTeam)
                 .build();
     }
 
     @Bean
-    public Step step3(ItemProcessor<MatchInput, MatchTeam> tableTeamAwayProcessor, JdbcBatchItemWriter<MatchTeam> writer3) {
-        return stepBuilderFactory.get("step3")
+    public Step writeTableAwayTeamStep(ItemProcessor<MatchInput, MatchTeam> tableTeamAwayProcessor,
+                                       MatchTeamWriter writeMatchTeam) {
+        return stepBuilderFactory.get("writeTableAwayTeamStep")
                 .<MatchInput, MatchTeam> chunk(10)
                 .reader(reader())
                 .processor(tableTeamAwayProcessor)
-                .writer(writer3)
+                .writer(writeMatchTeam)
                 .build();
     }
 }
