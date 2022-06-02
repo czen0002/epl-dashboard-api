@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class MatchService {
 
-    private MatchRepository matchRepository;
+    private final MatchRepository matchRepository;
 
     @Autowired
     public MatchService(MatchRepository matchRepository) {
