@@ -5,7 +5,12 @@ import io.czen.epldashboardapi.model.Team;
 import io.czen.epldashboardapi.service.MatchService;
 import io.czen.epldashboardapi.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -24,7 +29,7 @@ public class TeamController {
     }
 
     @GetMapping(value = "/team")
-    public Iterable<Team> getAllTeamOrderByTeamName() {
+    public List<Team> getAllTeamOrderByTeamName() {
         return this.teamService.getAllTeamsOrderByTeamName();
     }
 

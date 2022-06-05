@@ -1,5 +1,6 @@
 package io.czen.epldashboardapi.service;
 
+import io.czen.epldashboardapi.entity.TeamEntity;
 import io.czen.epldashboardapi.model.Match;
 import io.czen.epldashboardapi.model.Team;
 import io.czen.epldashboardapi.repository.TeamRepository;
@@ -11,7 +12,6 @@ import org.mockito.Mock;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +25,7 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@SuppressWarnings("squid:S5786")
 public class TeamServiceTest {
 
     private final String ARSENAL = "Arsenal";
@@ -43,14 +44,13 @@ public class TeamServiceTest {
 
     @Test
     public void shouldGetAllTeamsOrderByTeamName() {
-        Team team1 = new Team(ARSENAL);
-        Team team2 = new Team(LEEDS);
-        Team team3 = new Team(LIVERPOOL);
-        Team team4 = new Team(CHELSEA);
-        Iterable<Team> iterableTeams = Arrays.asList(team1, team4, team2, team3);
+        TeamEntity teamEntity1 = new TeamEntity(ARSENAL);
+        TeamEntity teamEntity2 = new TeamEntity(LEEDS);
+        TeamEntity teamEntity3 = new TeamEntity(LIVERPOOL);
+        TeamEntity teamEntity4 = new TeamEntity(CHELSEA);
+        Iterable<TeamEntity> iterableTeams = Arrays.asList(teamEntity1, teamEntity4, teamEntity2, teamEntity3);
         when(teamRepository.findAllByOrderByTeamName()).thenReturn(iterableTeams);
-        List<Team> result = new ArrayList<>();
-        teamService.getAllTeamsOrderByTeamName().forEach(result::add);
+        List<Team> result = teamService.getAllTeamsOrderByTeamName();
 
         assertEquals(4, result.size());
         assertEquals(ARSENAL, result.get(0).getTeamName());
@@ -61,21 +61,29 @@ public class TeamServiceTest {
 
     @Test
     public void shouldGetTeam() {
-        Team team = new Team(ARSENAL);
-        when(teamRepository.findByTeamName(anyString())).thenReturn(Optional.of(team));
+        TeamEntity teamEntity = new TeamEntity(ARSENAL);
+        when(teamRepository.findByTeamName(anyString())).thenReturn(Optional.of(teamEntity));
         Team result = teamService.getTeam(anyString());
 
         assertEquals(ARSENAL, result.getTeamName());
     }
 
     @Test
+    public void shouldGetNull() {
+        when(teamRepository.findByTeamName(anyString())).thenReturn(Optional.empty());
+        Team result = teamService.getTeam(anyString());
+
+        assertNull(result);
+    }
+
+    @Test
     public void shouldGetTeamWithMatches() {
-        Team team = new Team(ARSENAL);
+        TeamEntity teamEntity = new TeamEntity(ARSENAL);
         Match match1 = new Match(ARSENAL, CHELSEA, "W");
         Match match2 = new Match(ARSENAL, LIVERPOOL, "W");
         Match match3 = new Match(ARSENAL, LEEDS, "D");
         List<Match> matches = Arrays.asList(match1, match2, match3);
-        when(teamRepository.findByTeamName(anyString())).thenReturn(Optional.of(team));
+        when(teamRepository.findByTeamName(anyString())).thenReturn(Optional.of(teamEntity));
         when(matchService.getLatestMatchesByTeam(anyString(), anyInt())).thenReturn(matches);
         Team result = teamService.getTeamWithMatches(ARSENAL, 3);
 

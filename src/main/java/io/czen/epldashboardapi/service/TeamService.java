@@ -1,9 +1,13 @@
 package io.czen.epldashboardapi.service;
 
+import io.czen.epldashboardapi.entity.TeamEntity;
 import io.czen.epldashboardapi.model.Team;
 import io.czen.epldashboardapi.repository.TeamRepository;
+import io.czen.epldashboardapi.util.TeamConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class TeamService {
@@ -17,17 +21,21 @@ public class TeamService {
         this.matchService = matchService;
     }
 
-    public Iterable<Team> getAllTeamsOrderByTeamName() {
-        return this.teamRepository.findAllByOrderByTeamName();
+    public List<Team> getAllTeamsOrderByTeamName() {
+        return TeamConverter.convertTeamEntities(this.teamRepository.findAllByOrderByTeamName());
     }
 
     public Team getTeam(String teamName) {
-        return this.teamRepository.findByTeamName(teamName).orElse(null);
+        TeamEntity teamEntity = this.teamRepository.findByTeamName(teamName).orElse(null);
+        if (teamEntity == null) return null;
+        return TeamConverter.convertTeamEntity(teamEntity);
     }
 
     public Team getTeamWithMatches(String teamName, int count) {
-        Team team = this.teamRepository.findByTeamName(teamName).orElse(null);
-        if (team != null) team.setMatches(this.matchService.getLatestMatchesByTeam(teamName, count));
+        TeamEntity teamEntity = this.teamRepository.findByTeamName(teamName).orElse(null);
+        if (teamEntity == null) return null;
+        Team team = new Team(teamEntity.getTeamName());
+        team.setMatches(this.matchService.getLatestMatchesByTeam(teamName, count));
         return team;
     }
 }

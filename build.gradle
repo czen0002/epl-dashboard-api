@@ -39,7 +39,7 @@ jacoco {
 }
 
 def jacocoExclusions = ["**/repository", "**/configuration", "**/EplDashboardApiApplication.class",
-						"**/model", "**/data/*.class"];
+						"**/model", "**/entity", "**/data/*.class"];
 
 jacocoTestReport {
 	dependsOn test

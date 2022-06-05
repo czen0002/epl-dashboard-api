@@ -10,7 +10,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,6 +20,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
+@SuppressWarnings("squid:S5786")
 public class TeamControllerTest {
 
     @InjectMocks
@@ -33,13 +33,12 @@ public class TeamControllerTest {
     private MatchService matchService;
 
     @Test
-    public void shouldGetAllTeam() {
+    public void shouldGetAllTeamsOrderByTeamName() {
         Team team1 = new Team("Arsenal");
         Team team2 = new Team("Chelsea");
-        Iterable<Team> iterableTeams = Arrays.asList(team1, team2);
-        when(teamService.getAllTeamsOrderByTeamName()).thenReturn(iterableTeams);
-        List<Team> result = new ArrayList<>();
-        teamController.getAllTeamOrderByTeamName().forEach(result::add);
+        List<Team> teams = Arrays.asList(team1, team2);
+        when(teamService.getAllTeamsOrderByTeamName()).thenReturn(teams);
+        List<Team> result = teamController.getAllTeamOrderByTeamName();
 
         assertEquals("Arsenal", result.get(0).getTeamName());
         assertEquals("Chelsea", result.get(1).getTeamName());
@@ -51,13 +50,14 @@ public class TeamControllerTest {
         Match match2 = new Match("Arsenal", "Liverpool", "W");
         List<Match> matches = Arrays.asList(match1, match2);
         when(matchService.getMatchesBySeason(anyString(), anyString())).thenReturn(matches);
-        List<Match> results = new ArrayList<>(teamController.getMatchesForTeamInSeason("Arsenal", "2021-22"));
+        List<Match> results = teamController.getMatchesForTeamInSeason("Arsenal", "2021-22");
 
         assertEquals(2, results.size());
         assertEquals("Arsenal", results.get(0).getHomeTeam());
         assertEquals("Chelsea", results.get(0).getAwayTeam());
         assertEquals("W", results.get(0).getFullTimeResult());
     }
+
     @Test
     public void shouldGetTeam() {
         Match match1 = new Match("Arsenal", "Chelsea", "W");
