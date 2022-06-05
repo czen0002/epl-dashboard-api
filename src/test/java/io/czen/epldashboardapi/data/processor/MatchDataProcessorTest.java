@@ -10,6 +10,7 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@SuppressWarnings("squid:S5786")
 public class MatchDataProcessorTest {
 
     private MatchDataProcessor processor;

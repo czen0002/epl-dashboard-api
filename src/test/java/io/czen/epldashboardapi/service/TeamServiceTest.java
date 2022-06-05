@@ -25,6 +25,7 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@SuppressWarnings("squid:S5786")
 public class TeamServiceTest {
 
     private final String ARSENAL = "Arsenal";

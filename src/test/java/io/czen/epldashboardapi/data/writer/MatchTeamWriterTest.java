@@ -17,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
+@SuppressWarnings("squid:S5786")
 public class MatchTeamWriterTest {
 
     private final String SEASON = "2021-22";

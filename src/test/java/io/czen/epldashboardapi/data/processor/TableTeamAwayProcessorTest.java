@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@SuppressWarnings("squid:S5786")
 public class TableTeamAwayProcessorTest {
 
     private TableTeamAwayProcessor processor;
