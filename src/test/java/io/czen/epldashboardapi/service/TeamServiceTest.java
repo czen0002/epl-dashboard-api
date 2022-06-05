@@ -4,13 +4,11 @@ import io.czen.epldashboardapi.entity.TeamEntity;
 import io.czen.epldashboardapi.model.Match;
 import io.czen.epldashboardapi.model.Team;
 import io.czen.epldashboardapi.repository.TeamRepository;
-import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,9 +20,7 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-@RunWith(SpringRunner.class)
-@DataJpaTest
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@ExtendWith(MockitoExtension.class)
 @SuppressWarnings("squid:S5786")
 public class TeamServiceTest {
 
