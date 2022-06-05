@@ -30,16 +30,16 @@ public class TeamController {
 
     @GetMapping(value = "/team")
     public List<Team> getAllTeamOrderByTeamName() {
-        return this.teamService.getAllTeamsOrderByTeamName();
+        return teamService.getAllTeamsOrderByTeamName();
     }
 
     @GetMapping(value = "/team/{teamName}/matches")
     public List<Match> getMatchesForTeamInSeason(@PathVariable String teamName, @RequestParam String season) {
-        return this.matchService.getMatchesBySeason(teamName, season);
+        return matchService.getMatchesBySeason(teamName, season);
     }
 
     @GetMapping(value = "/team/{teamName}")
     public Team getTeam(@PathVariable String teamName, @RequestParam int count) {
-        return this.teamService.getTeamWithMatches(teamName, count);
+        return teamService.getTeamWithMatches(teamName, count);
     }
 }

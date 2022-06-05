@@ -19,10 +19,10 @@ public class MatchService {
     }
 
     public List<Match> getMatchesBySeason(String teamName, String season) {
-        return MatchConverter.convertMatchEntities(this.matchRepository.getMatchesByTeamBySeason(teamName, season));
+        return MatchConverter.convertMatchEntities(matchRepository.getMatchesByTeamBySeason(teamName, season));
     }
 
     public List<Match> getLatestMatchesByTeam(String teamName, int count) {
-        return MatchConverter.convertMatchEntities(this.matchRepository.getLatestMatchesByTeam(teamName, count));
+        return MatchConverter.convertMatchEntities(matchRepository.getLatestMatchesByTeam(teamName, count));
     }
 }
