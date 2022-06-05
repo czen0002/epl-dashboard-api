@@ -3,13 +3,16 @@ package io.czen.epldashboardapi.util;
 import io.czen.epldashboardapi.entity.MatchEntity;
 import io.czen.epldashboardapi.model.Match;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public final class MatchConverter {
 
     private MatchConverter() {
         // not called
     }
 
-    public static Match convert(MatchEntity matchEntity) {
+    public static Match convertMatchEntity(MatchEntity matchEntity) {
         Match match = new Match();
         match.setSeason(matchEntity.getSeason());
         match.setDate(matchEntity.getDate());
@@ -35,5 +38,11 @@ public final class MatchConverter {
         match.setHomeTeamRedCards(matchEntity.getHomeTeamRedCards());
         match.setAwayTeamRedCards(matchEntity.getAwayTeamRedCards());
         return match;
+    }
+
+    public static List<Match> convertMatchEntities(List<MatchEntity> matchEntities) {
+        List<Match> matches = new ArrayList<>();
+        matchEntities.forEach(m -> matches.add(convertMatchEntity(m)));
+        return matches;
     }
 }
