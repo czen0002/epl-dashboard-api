@@ -12,27 +12,32 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SuppressWarnings("squid:S5786")
 public class MatchConverterTest {
 
+    private final String ARSENAL = "Arsenal";
+    private final String CHELSEA = "Chelsea";
+    private final String HOME_WON = "W";
+    private final String HOME_DRAWN = "D";
+
     @Test
     public void convertMatchEntitySuccessfully() {
-        MatchEntity matchEntity= new MatchEntity("Arsenal", "Chelsea", "D");
+        MatchEntity matchEntity= new MatchEntity(ARSENAL, CHELSEA, HOME_DRAWN);
         Match result = MatchConverter.convertMatchEntity(matchEntity);
 
-        assertEquals("Arsenal", result.getHomeTeam());
-        assertEquals("Chelsea", result.getAwayTeam());
-        assertEquals("D", result.getFullTimeResult());
+        assertEquals(ARSENAL, result.getHomeTeam());
+        assertEquals(CHELSEA, result.getAwayTeam());
+        assertEquals(HOME_DRAWN, result.getFullTimeResult());
     }
 
     @Test
     public void convertMatchEntitiesSuccessfully() {
-        MatchEntity matchEntity1= new MatchEntity("Arsenal", "Chelsea", "D");
-        MatchEntity matchEntity2= new MatchEntity("Chelsea", "Arsenal", "W");
+        MatchEntity matchEntity1= new MatchEntity(ARSENAL, CHELSEA, HOME_DRAWN);
+        MatchEntity matchEntity2= new MatchEntity(CHELSEA, ARSENAL, HOME_WON);
         List<MatchEntity> matchEntities = Arrays.asList(matchEntity1, matchEntity2);
         List<Match> result = MatchConverter.convertMatchEntities(matchEntities);
 
         assertEquals(2, result.size());
-        assertEquals("Arsenal", result.get(0).getHomeTeam());
-        assertEquals("Chelsea", result.get(1).getHomeTeam());
-        assertEquals("D", result.get(0).getFullTimeResult());
-        assertEquals("W", result.get(1).getFullTimeResult());
+        assertEquals(ARSENAL, result.get(0).getHomeTeam());
+        assertEquals(CHELSEA, result.get(1).getHomeTeam());
+        assertEquals(HOME_DRAWN, result.get(0).getFullTimeResult());
+        assertEquals(HOME_WON, result.get(1).getFullTimeResult());
     }
 }

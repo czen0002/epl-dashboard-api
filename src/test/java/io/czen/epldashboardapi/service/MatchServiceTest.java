@@ -17,7 +17,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@RunWith(SpringRunner.class)
 @DataJpaTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SuppressWarnings("squid:S5786")

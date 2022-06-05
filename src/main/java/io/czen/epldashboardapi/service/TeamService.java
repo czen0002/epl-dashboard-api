@@ -22,20 +22,20 @@ public class TeamService {
     }
 
     public List<Team> getAllTeamsOrderByTeamName() {
-        return TeamConverter.convertTeamEntities(this.teamRepository.findAllByOrderByTeamName());
+        return TeamConverter.convertTeamEntities(teamRepository.findAllByOrderByTeamName());
     }
 
     public Team getTeam(String teamName) {
-        TeamEntity teamEntity = this.teamRepository.findByTeamName(teamName).orElse(null);
+        TeamEntity teamEntity = teamRepository.findByTeamName(teamName).orElse(null);
         if (teamEntity == null) return null;
         return TeamConverter.convertTeamEntity(teamEntity);
     }
 
     public Team getTeamWithMatches(String teamName, int count) {
-        TeamEntity teamEntity = this.teamRepository.findByTeamName(teamName).orElse(null);
+        TeamEntity teamEntity = teamRepository.findByTeamName(teamName).orElse(null);
         if (teamEntity == null) return null;
         Team team = new Team(teamEntity.getTeamName());
-        team.setMatches(this.matchService.getLatestMatchesByTeam(teamName, count));
+        team.setMatches(matchService.getLatestMatchesByTeam(teamName, count));
         return team;
     }
 }
