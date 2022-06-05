@@ -35,9 +35,13 @@ public class TeamService {
         return TeamConverter.convert(teamEntity);
     }
 
-//    public TeamEntity getTeamWithMatches(String teamName, int count) {
-//        TeamEntity teamEntity = this.teamRepository.findByTeamName(teamName).orElse(null);
-//        if (teamEntity != null) teamEntity.setMatchEntities(this.matchService.getLatestMatchesByTeam(teamName, count));
-//        return teamEntity;
-//    }
+    public Team getTeamWithMatches(String teamName, int count) {
+        TeamEntity teamEntity = this.teamRepository.findByTeamName(teamName).orElse(null);
+        if (teamEntity != null) {
+            Team team = new Team(teamEntity.getTeamName());
+            team.setMatches(this.matchService.getLatestMatchesByTeam(teamName, count));
+            return team;
+        }
+        return null;
+    }
 }

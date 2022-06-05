@@ -36,10 +36,10 @@ public class JobCompletionNotificationListener extends JobExecutionListenerSuppo
             em.createQuery("select distinct(m.homeTeam) from Match m", String.class)
                     .getResultList()
                     .stream()
-                    .map(e -> new TeamEntity(e))
+                    .map(TeamEntity::new)
                     .forEach(team -> teamData.put(team.getTeamName(), team));
 
-            teamData.values().forEach(team -> em.persist(team));
+            teamData.values().forEach(em::persist);
         }
     }
 }

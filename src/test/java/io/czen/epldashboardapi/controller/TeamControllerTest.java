@@ -1,7 +1,5 @@
 package io.czen.epldashboardapi.controller;
 
-import io.czen.epldashboardapi.entity.MatchEntity;
-import io.czen.epldashboardapi.entity.TeamEntity;
 import io.czen.epldashboardapi.model.Match;
 import io.czen.epldashboardapi.model.Team;
 import io.czen.epldashboardapi.service.MatchService;
@@ -12,7 +10,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -60,26 +57,26 @@ public class TeamControllerTest {
         assertEquals("W", results.get(0).getFullTimeResult());
     }
 
-//    @Test
-//    public void shouldGetTeam() {
-//        MatchEntity matchEntity1 = new MatchEntity("Arsenal", "Chelsea", "W");
-//        MatchEntity matchEntity2 = new MatchEntity("Arsenal", "Liverpool", "W");
-//        TeamEntity teamEntity = new TeamEntity("Arsenal");
-//        List<MatchEntity> matchEntities = Arrays.asList(matchEntity1, matchEntity2);
-//        teamEntity.setMatchEntities(matchEntities);
-//        when(teamService.getTeamWithMatches(anyString(), anyInt())).thenReturn(teamEntity);
-//        TeamEntity result = teamController.getTeam("Arsenal", 2);
-//
-//        assertEquals(2, result.getMatchEntities().size());
-//        assertEquals("Arsenal", result.getMatchEntities().get(1).getHomeTeam());
-//        assertEquals("Liverpool", result.getMatchEntities().get(1).getAwayTeam());
-//        assertEquals("W", result.getMatchEntities().get(1).getFullTimeResult());
-//    }
-//
-//    @Test void shouldGetTeamNull() {
-//        when(teamService.getTeamWithMatches(anyString(), anyInt())).thenReturn(null);
-//        TeamEntity result = teamController.getTeam("Arsenal", 2);
-//
-//        assertNull(result);
-//    }
+    @Test
+    public void shouldGetTeam() {
+        Match match1 = new Match("Arsenal", "Chelsea", "W");
+        Match match2 = new Match("Arsenal", "Liverpool", "W");
+        Team team = new Team("Arsenal");
+        List<Match> matches = Arrays.asList(match1, match2);
+        team.setMatches(matches);
+        when(teamService.getTeamWithMatches(anyString(), anyInt())).thenReturn(team);
+        Team result = teamController.getTeam("Arsenal", 2);
+
+        assertEquals(2, result.getMatches().size());
+        assertEquals("Arsenal", result.getMatches().get(1).getHomeTeam());
+        assertEquals("Liverpool", result.getMatches().get(1).getAwayTeam());
+        assertEquals("W", result.getMatches().get(1).getFullTimeResult());
+    }
+
+    @Test void shouldGetTeamNull() {
+        when(teamService.getTeamWithMatches(anyString(), anyInt())).thenReturn(null);
+        Team result = teamController.getTeam("Arsenal", 2);
+
+        assertNull(result);
+    }
 }
