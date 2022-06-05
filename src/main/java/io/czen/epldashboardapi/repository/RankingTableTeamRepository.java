@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface TableTeamRepository extends CrudRepository<RankingTableTeamEntity, Long> {
+public interface RankingTableTeamRepository extends CrudRepository<RankingTableTeamEntity, Long> {
 
     Optional<RankingTableTeamEntity> findByTeamName(String teamName);
 

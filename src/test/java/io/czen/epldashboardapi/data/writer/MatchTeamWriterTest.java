@@ -2,7 +2,7 @@ package io.czen.epldashboardapi.data.writer;
 
 import io.czen.epldashboardapi.model.MatchTeam;
 import io.czen.epldashboardapi.entity.RankingTableTeamEntity;
-import io.czen.epldashboardapi.repository.TableTeamRepository;
+import io.czen.epldashboardapi.repository.RankingTableTeamRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +25,14 @@ public class MatchTeamWriterTest {
     private final String LEEDS = "Leeds";
 
     private final EntityManager entityManager;
-    private final TableTeamRepository tableTeamRepository;
+    private final RankingTableTeamRepository rankingTableTeamRepository;
 
     @Autowired
     public MatchTeamWriterTest(
             EntityManager entityManager,
-            TableTeamRepository tableTeamRepository) {
+            RankingTableTeamRepository rankingTableTeamRepository) {
         this.entityManager = entityManager;
-        this.tableTeamRepository = tableTeamRepository;
+        this.rankingTableTeamRepository = rankingTableTeamRepository;
     }
 
     @Test
@@ -53,16 +53,16 @@ public class MatchTeamWriterTest {
         List<MatchTeam> matchTeams = new ArrayList<>(List.of(matchTeam1, matchTeam2, matchTeam3, matchTeam4));
         matchTeamHomeWriter.write(matchTeams);
 
-        RankingTableTeamEntity rankingTableTeamEntity1 = tableTeamRepository.findByTeamName(ARSENAL).get();
+        RankingTableTeamEntity rankingTableTeamEntity1 = rankingTableTeamRepository.findByTeamName(ARSENAL).get();
         assertEquals(Integer.valueOf(4), rankingTableTeamEntity1.getPoints());
         assertEquals(Integer.valueOf(3), rankingTableTeamEntity1.getPlayed());
         assertEquals(Integer.valueOf(0), rankingTableTeamEntity1.getGoalsDifference());
-        RankingTableTeamEntity rankingTableTeamEntity2 = tableTeamRepository.findByTeamName(LEEDS).get();
+        RankingTableTeamEntity rankingTableTeamEntity2 = rankingTableTeamRepository.findByTeamName(LEEDS).get();
         assertEquals(Integer.valueOf(1), rankingTableTeamEntity2.getPoints());
         assertEquals(Integer.valueOf(1), rankingTableTeamEntity2.getPlayed());
         assertEquals(Integer.valueOf(0), rankingTableTeamEntity2.getGoalsDifference());
 
-        Iterable<RankingTableTeamEntity> tableTeams = tableTeamRepository.findAllByOrderByPointsDesc();
+        Iterable<RankingTableTeamEntity> tableTeams = rankingTableTeamRepository.findAllByOrderByPointsDesc();
         List<RankingTableTeamEntity> rankingTableTeamsListEntity = new ArrayList<>();
         tableTeams.forEach(rankingTableTeamsListEntity::add);
         assertEquals(2, rankingTableTeamsListEntity.size());
