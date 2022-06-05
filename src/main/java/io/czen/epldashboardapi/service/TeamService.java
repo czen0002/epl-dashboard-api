@@ -7,7 +7,6 @@ import io.czen.epldashboardapi.util.TeamConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,25 +22,20 @@ public class TeamService {
     }
 
     public List<Team> getAllTeamsOrderByTeamName() {
-        Iterable<TeamEntity> teamEntities = this.teamRepository.findAllByOrderByTeamName();
-        List<Team> teams =  new ArrayList<>();
-        teamEntities.forEach(t -> teams.add(TeamConverter.convert(t)));
-        return teams;
+        return TeamConverter.convertTeamEntities(this.teamRepository.findAllByOrderByTeamName());
     }
 
     public Team getTeam(String teamName) {
         TeamEntity teamEntity = this.teamRepository.findByTeamName(teamName).orElse(null);
         if (teamEntity == null) return null;
-        return TeamConverter.convert(teamEntity);
+        return TeamConverter.convertTeamEntity(teamEntity);
     }
 
     public Team getTeamWithMatches(String teamName, int count) {
         TeamEntity teamEntity = this.teamRepository.findByTeamName(teamName).orElse(null);
-        if (teamEntity != null) {
-            Team team = new Team(teamEntity.getTeamName());
-            team.setMatches(this.matchService.getLatestMatchesByTeam(teamName, count));
-            return team;
-        }
-        return null;
+        if (teamEntity == null) return null;
+        Team team = new Team(teamEntity.getTeamName());
+        team.setMatches(this.matchService.getLatestMatchesByTeam(teamName, count));
+        return team;
     }
 }

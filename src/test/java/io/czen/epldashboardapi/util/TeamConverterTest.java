@@ -12,7 +12,7 @@ public class TeamConverterTest {
     @Test
     public void convertTeamSuccessfully() {
         TeamEntity teamEntity = new TeamEntity("Arsenal");
-        Team team = TeamConverter.convert(teamEntity);
+        Team team = TeamConverter.convertTeamEntity(teamEntity);
 
         assertEquals("Arsenal", team.getTeamName());
     }
