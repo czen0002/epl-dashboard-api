@@ -2,6 +2,7 @@ package io.czen.epldashboardapi.controller;
 
 import io.czen.epldashboardapi.entity.MatchEntity;
 import io.czen.epldashboardapi.entity.TeamEntity;
+import io.czen.epldashboardapi.model.Match;
 import io.czen.epldashboardapi.model.Team;
 import io.czen.epldashboardapi.service.MatchService;
 import io.czen.epldashboardapi.service.TeamService;
@@ -47,11 +48,11 @@ public class TeamControllerTest {
 
     @Test
     public void shouldGetMatchesForTeamInSeason() {
-        MatchEntity matchEntity1 = new MatchEntity("Arsenal", "Chelsea", "W");
-        MatchEntity matchEntity2 = new MatchEntity("Arsenal", "Liverpool", "W");
-        List<MatchEntity> matchEntities = Arrays.asList(matchEntity1, matchEntity2);
-        when(matchService.getMatchesBySeason(anyString(), anyString())).thenReturn(matchEntities);
-        List<MatchEntity> results = new ArrayList<>(teamController.getMatchesForTeamInSeason("Arsenal", "2021-22"));
+        Match match1 = new Match("Arsenal", "Chelsea", "W");
+        Match match2 = new Match("Arsenal", "Liverpool", "W");
+        List<Match> matches = Arrays.asList(match1, match2);
+        when(matchService.getMatchesBySeason(anyString(), anyString())).thenReturn(matches);
+        List<Match> results = teamController.getMatchesForTeamInSeason("Arsenal", "2021-22");
 
         assertEquals(2, results.size());
         assertEquals("Arsenal", results.get(0).getHomeTeam());

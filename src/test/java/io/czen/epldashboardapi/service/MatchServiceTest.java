@@ -1,6 +1,7 @@
 package io.czen.epldashboardapi.service;
 
 import io.czen.epldashboardapi.entity.MatchEntity;
+import io.czen.epldashboardapi.model.Match;
 import io.czen.epldashboardapi.repository.MatchRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterAll;
@@ -62,19 +63,19 @@ public class MatchServiceTest {
 
     @Test
     public void shouldGetMatchesBySeason() {
-        List<MatchEntity> matchesBySeason = matchService.getMatchesBySeason(ARSENAL, SEASON);
-        assertEquals(3, matchesBySeason.size());
+        List<Match> result = matchService.getMatchesBySeason(ARSENAL, SEASON);
+        assertEquals(3, result.size());
     }
 
     @Test
     public void shouldGetEmptyMatchesBySeason() {
-        List<MatchEntity> matchesBySeason = matchService.getMatchesBySeason(EVERTON, SEASON);
-        assertEquals(0, matchesBySeason.size());
+        List<Match> result = matchService.getMatchesBySeason(EVERTON, SEASON);
+        assertEquals(0, result.size());
     }
 
     @Test
     public void shouldGetTwoLatestMatchesByTeam() {
-        List<MatchEntity> latestTwoMatchEntities = matchService.getLatestMatchesByTeam(ARSENAL, 2);
-        assertEquals(2, latestTwoMatchEntities.size());
+        List<Match> result = matchService.getLatestMatchesByTeam(ARSENAL, 2);
+        assertEquals(2, result.size());
     }
 }
