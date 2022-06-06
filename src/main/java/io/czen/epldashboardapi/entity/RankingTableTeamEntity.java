@@ -29,6 +29,12 @@ public class RankingTableTeamEntity {
     private Integer points;
     private String season;
 
+    public RankingTableTeamEntity(String teamName, Integer played, String season) {
+        this.teamName = teamName;
+        this.played = played;
+        this.season = season;
+    }
+
     public RankingTableTeamEntity(String teamName, Integer played, Integer won, Integer drawn, Integer lost, Integer goalsFor,
                                   Integer goalsAgainst, Integer goalsDifference, Integer points, String season) {
         this.teamName = teamName;
