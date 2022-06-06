@@ -39,6 +39,7 @@ public class MatchTeamWriter implements ItemWriter<MatchTeam> {
         if (rankingTableTeamEntity == null) {
             rankingTableTeamEntity = new RankingTableTeamEntity(
                     teamName,
+                    1,
                     newMatchTeam.getWon(),
                     newMatchTeam.getDrawn(),
                     newMatchTeam.getLost(),

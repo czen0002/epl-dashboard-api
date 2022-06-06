@@ -16,11 +16,11 @@ public class RankingTableTeamConverterTest {
     private final String SEASON = "2021-22";
     @Test
     public void convertRankingTableTeamEntitySuccessfully() {
-        RankingTableTeamEntity rankingTableTeamEntity = new RankingTableTeamEntity(ARSENAL, 1,
-                1, 1, 3, 1, 2, 4, SEASON);
-        rankingTableTeamEntity.setPlayed(3);
+        RankingTableTeamEntity rankingTableTeamEntity = new RankingTableTeamEntity(ARSENAL, 3, 1, 1,
+                1, 3, 1, 2, 4, SEASON);
         RankingTableTeam result = RankingTableTeamConverter.convertRankingTableTeamEntity(rankingTableTeamEntity);
         assertEquals(ARSENAL, result.getTeamName());
+        assertEquals(3, result.getPlayed());
         assertEquals(1, result.getWon());
         assertEquals(1, result.getDrawn());
         assertEquals(1, result.getLost());
@@ -29,7 +29,6 @@ public class RankingTableTeamConverterTest {
         assertEquals(2, result.getGoalsDifference());
         assertEquals(4, result.getPoints());
         assertEquals(SEASON, result.getSeason());
-        assertEquals(3, result.getPlayed());
     }
     @Test
     public void convertRankingTableTeamEntitiesSuccessfully() {
