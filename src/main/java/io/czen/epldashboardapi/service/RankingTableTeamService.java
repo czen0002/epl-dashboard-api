@@ -18,7 +18,8 @@ public class RankingTableTeamService {
         this.rankingTableTeamRepository = rankingTableTeamRepository;
     }
 
-    public List<RankingTableTeam> getRankingTableTeamsBySeason(String season) {
-        return RankingTableTeamConverter.convertRankingTableTeamEntities(rankingTableTeamRepository.getBySeason(season));
+    public List<RankingTableTeam> getRankingTableBySeason(String season) {
+        return RankingTableTeamConverter.convertRankingTableTeamEntities(
+                rankingTableTeamRepository.getBySeasonOrderByPointsDesc(season));
     }
 }

@@ -105,8 +105,8 @@ public class TeamControllerTest {
         rankingTableTeam3.setTeamName(LIVERPOOL);
         rankingTableTeam3.setSeason(SEASON);
         List<RankingTableTeam> rankingTableTeams = Arrays.asList(rankingTableTeam1, rankingTableTeam2, rankingTableTeam3);
-        when(rankingTableTeamService.getRankingTableTeamsBySeason(anyString())).thenReturn(rankingTableTeams);
-        List<RankingTableTeam> result = teamController.getRankingTableInSeason(SEASON);
+        when(rankingTableTeamService.getRankingTableBySeason(anyString())).thenReturn(rankingTableTeams);
+        List<RankingTableTeam> result = teamController.getRankingTableBySeason(SEASON);
         
         assertEquals(3, result.size());
         assertEquals(ARSENAL, result.get(0).getTeamName());

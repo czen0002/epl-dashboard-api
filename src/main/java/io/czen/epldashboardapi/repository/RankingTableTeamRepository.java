@@ -14,5 +14,5 @@ public interface RankingTableTeamRepository extends CrudRepository<RankingTableT
 
     Iterable<RankingTableTeamEntity> findAllByOrderByPointsDesc();
 
-    List<RankingTableTeamEntity> getBySeason(String season);
+    List<RankingTableTeamEntity> getBySeasonOrderByPointsDesc(String season);
 }

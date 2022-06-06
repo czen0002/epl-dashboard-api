@@ -49,7 +49,7 @@ public class TeamController {
     }
 
     @GetMapping(value = "/table/{season}")
-    public List<RankingTableTeam> getRankingTableInSeason(@PathVariable String season) {
-        return rankingTableTeamService.getRankingTableTeamsBySeason(season);
+    public List<RankingTableTeam> getRankingTableBySeason(@PathVariable String season) {
+        return rankingTableTeamService.getRankingTableBySeason(season);
     }
 }
