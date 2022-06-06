@@ -14,7 +14,7 @@ public class MatchConverterTest {
 
     private final String ARSENAL = "Arsenal";
     private final String CHELSEA = "Chelsea";
-    private final String HOME_WON = "W";
+    private final String HOME_WON = "H";
     private final String HOME_DRAWN = "D";
 
     @Test

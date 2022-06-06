@@ -28,7 +28,7 @@ public class TeamControllerTest {
     private final String ARSENAL = "Arsenal";
     private final String CHELSEA = "Chelsea";
     private final String LIVERPOOL = "Liverpool";
-    private final String HOME_WON = "W";
+    private final String HOME_WON = "H";
     private final String SEASON = "2021-22";
 
     @InjectMocks
@@ -82,7 +82,7 @@ public class TeamControllerTest {
         assertEquals(2, result.getMatches().size());
         assertEquals(ARSENAL, result.getMatches().get(1).getHomeTeam());
         assertEquals(LIVERPOOL, result.getMatches().get(1).getAwayTeam());
-        assertEquals("W", result.getMatches().get(1).getFullTimeResult());
+        assertEquals(HOME_WON, result.getMatches().get(1).getFullTimeResult());
     }
 
     @Test

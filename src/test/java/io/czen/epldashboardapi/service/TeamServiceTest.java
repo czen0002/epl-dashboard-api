@@ -29,6 +29,8 @@ public class TeamServiceTest {
     private final String LEEDS = "Leeds";
     private final String LIVERPOOL = "Liverpool";
     private final String EVERTON = "Everton";
+    private final String HOME_WON = "H";
+    private final String HOME_DRAWN = "D";
 
     private final TeamRepository teamRepository;
     private final MatchRepository matchRepository;
@@ -50,9 +52,9 @@ public class TeamServiceTest {
         Iterable<TeamEntity> iterableTeams = Arrays.asList(teamEntity1, teamEntity2, teamEntity3, teamEntity4);
         teamRepository.saveAll(iterableTeams);
 
-        MatchEntity matchEntity1 = new MatchEntity(ARSENAL, CHELSEA, "W");
-        MatchEntity matchEntity2 = new MatchEntity(ARSENAL, LIVERPOOL, "W");
-        MatchEntity matchEntity3 = new MatchEntity(ARSENAL, LEEDS, "D");
+        MatchEntity matchEntity1 = new MatchEntity(ARSENAL, CHELSEA, HOME_WON);
+        MatchEntity matchEntity2 = new MatchEntity(ARSENAL, LIVERPOOL, HOME_WON);
+        MatchEntity matchEntity3 = new MatchEntity(ARSENAL, LEEDS, HOME_DRAWN);
         Iterable<MatchEntity> iterableMatches = Arrays.asList(matchEntity1, matchEntity2, matchEntity3);
         matchRepository.saveAll(iterableMatches);
 
