@@ -40,4 +40,14 @@ public class MatchConverterTest {
         assertEquals(HOME_DRAWN, result.get(0).getFullTimeResult());
         assertEquals(HOME_WON, result.get(1).getFullTimeResult());
     }
+
+    @Test
+    public void convertMatchSuccessfully() {
+        Match match = new Match(ARSENAL, CHELSEA, HOME_DRAWN);
+        MatchEntity result = MatchConverter.convertMatch(match);
+
+        assertEquals(ARSENAL, result.getHomeTeam());
+        assertEquals(CHELSEA, result.getAwayTeam());
+        assertEquals(HOME_DRAWN, result.getFullTimeResult());
+    }
 }
