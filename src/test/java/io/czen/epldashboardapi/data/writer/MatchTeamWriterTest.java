@@ -10,7 +10,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.persistence.EntityManager;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -50,23 +50,14 @@ public class MatchTeamWriterTest {
         MatchTeam matchTeam4 = new MatchTeam(0, 1, 0, 2, 2, 0, 1);
         matchTeam4.setTeamName(LEEDS);
         matchTeam4.setSeason(SEASON);
-        List<MatchTeam> matchTeams = new ArrayList<>(List.of(matchTeam1, matchTeam2, matchTeam3, matchTeam4));
+        List<MatchTeam> matchTeams = Arrays.asList(matchTeam1, matchTeam2, matchTeam3, matchTeam4);
         matchTeamHomeWriter.write(matchTeams);
 
-        RankingTableTeamEntity rankingTableTeamEntity1 = rankingTableTeamRepository.findByTeamName(ARSENAL).get();
-        assertEquals(Integer.valueOf(4), rankingTableTeamEntity1.getPoints());
-        assertEquals(Integer.valueOf(3), rankingTableTeamEntity1.getPlayed());
-        assertEquals(Integer.valueOf(0), rankingTableTeamEntity1.getGoalsDifference());
-        RankingTableTeamEntity rankingTableTeamEntity2 = rankingTableTeamRepository.findByTeamName(LEEDS).get();
-        assertEquals(Integer.valueOf(1), rankingTableTeamEntity2.getPoints());
-        assertEquals(Integer.valueOf(1), rankingTableTeamEntity2.getPlayed());
-        assertEquals(Integer.valueOf(0), rankingTableTeamEntity2.getGoalsDifference());
+        List<RankingTableTeamEntity> result = rankingTableTeamRepository.getBySeasonOrderByPointsDesc(SEASON);
 
-        Iterable<RankingTableTeamEntity> tableTeams = rankingTableTeamRepository.findAllByOrderByPointsDesc();
-        List<RankingTableTeamEntity> rankingTableTeamsListEntity = new ArrayList<>();
-        tableTeams.forEach(rankingTableTeamsListEntity::add);
-        assertEquals(2, rankingTableTeamsListEntity.size());
-        assertEquals(ARSENAL, rankingTableTeamsListEntity.get(0).getTeamName());
-        assertEquals(LEEDS, rankingTableTeamsListEntity.get(1).getTeamName());
+        assertEquals(2, result.size());
+        assertEquals(ARSENAL, result.get(0).getTeamName());
+        assertEquals(4, result.get(0).getPoints());
+        assertEquals(0, result.get(1).getGoalsDifference());
     }
 }
