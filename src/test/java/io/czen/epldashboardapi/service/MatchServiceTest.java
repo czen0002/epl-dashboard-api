@@ -7,10 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInstance;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 import java.util.List;
@@ -50,8 +48,7 @@ public class MatchServiceTest {
         matchEntity3.setSeason(SEASON);
         MatchEntity matchEntity4 = new MatchEntity(CHELSEA, LIVERPOOL, HOME_DRAWN);
         matchEntity4.setSeason(SEASON);
-        MatchEntity[] matchEntities = {matchEntity1, matchEntity2, matchEntity3, matchEntity4};
-        Iterable<MatchEntity> iterableMatches = Arrays.asList(matchEntities);
+        Iterable<MatchEntity> iterableMatches = Arrays.asList(matchEntity1, matchEntity2, matchEntity3, matchEntity4);
         matchRepository.saveAll(iterableMatches);
         matchService = new MatchService(matchRepository);
     }

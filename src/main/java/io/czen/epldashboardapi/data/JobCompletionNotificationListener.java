@@ -33,7 +33,7 @@ public class JobCompletionNotificationListener extends JobExecutionListenerSuppo
             log.info("!!! JOB FINISHED! Time to verify the results");
             Map<String, TeamEntity> teamData = new HashMap<>();
 
-            em.createQuery("select distinct(m.homeTeam) from Match m", String.class)
+            em.createQuery("select distinct(m.homeTeam) from MatchEntity m", String.class)
                     .getResultList()
                     .stream()
                     .map(TeamEntity::new)

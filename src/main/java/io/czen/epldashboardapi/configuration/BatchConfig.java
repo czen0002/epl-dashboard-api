@@ -78,7 +78,7 @@ public class BatchConfig {
     public JdbcBatchItemWriter<MatchEntity> writeMatch(DataSource dataSource) {
         return new JdbcBatchItemWriterBuilder<MatchEntity>()
                 .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
-                .sql("INSERT INTO match(id, season, date, home_team, away_team, full_time_home_team_goals, " +
+                .sql("INSERT INTO match_entity(id, season, date, home_team, away_team, full_time_home_team_goals, " +
                         "full_time_away_team_goals, full_time_result, half_time_home_team_goals, half_time_away_team_goals, " +
                         "half_time_result, referee, home_team_shots, away_team_shots, home_team_shots_on_target, " +
                         "away_team_shots_on_target, home_team_corners, away_team_corners, home_team_fouls_committed, " +
