@@ -2,41 +2,41 @@ package io.czen.epldashboardapi.data.processor;
 
 import io.czen.epldashboardapi.data.MatchInput;
 import io.czen.epldashboardapi.entity.MatchEntity;
+import io.czen.epldashboardapi.model.Match;
 import org.springframework.batch.item.ItemProcessor;
 
 import java.time.LocalDate;
 
 
-public class MatchDataProcessor implements ItemProcessor<MatchInput, MatchEntity> {
+public class MatchDataProcessor implements ItemProcessor<MatchInput, Match> {
 
     @Override
-    public MatchEntity process(MatchInput matchInput) {
-        MatchEntity matchEntity = new MatchEntity();
-        matchEntity.setId(Long.parseLong(matchInput.getId()));
-        matchEntity.setSeason(matchInput.getSeason());
-        matchEntity.setDate(LocalDate.parse(matchInput.getDate()));
-        matchEntity.setHomeTeam(matchInput.getHomeTeam());
-        matchEntity.setAwayTeam(matchInput.getAwayTeam());
-        matchEntity.setFullTimeHomeTeamGoals(matchInput.getFullTimeHomeTeamGoals());
-        matchEntity.setFullTimeAwayTeamGoals(matchInput.getFullTimeAwayTeamGoals());
-        matchEntity.setFullTimeResult(matchInput.getFullTimeResult());
-        matchEntity.setHalfTimeHomeTeamGoals(matchInput.getHalfTimeHomeTeamGoals());
-        matchEntity.setHalfTimeAwayTeamGoals(matchInput.getHalfTimeAwayTeamGoals());
-        matchEntity.setHalfTimeResult(matchInput.getHalfTimeResult());
-        matchEntity.setReferee(matchInput.getReferee());
-        matchEntity.setHomeTeamShots(matchInput.getHomeTeamShots());
-        matchEntity.setAwayTeamShots(matchInput.getAwayTeamShots());
-        matchEntity.setHomeTeamShotsOnTarget(matchInput.getHomeTeamShotsOnTarget());
-        matchEntity.setAwayTeamShotsOnTarget(matchInput.getAwayTeamShotsOnTarget());
-        matchEntity.setHomeTeamCorners(matchInput.getHomeTeamCorners());
-        matchEntity.setAwayTeamCorners(matchInput.getAwayTeamCorners());
-        matchEntity.setHomeTeamFoulsCommitted(matchInput.getHomeTeamFoulsCommitted());
-        matchEntity.setAwayTeamFoulsCommitted(matchInput.getAwayTeamFoulsCommitted());
-        matchEntity.setHomeTeamYellowCards(matchInput.getHomeTeamYellowCards());
-        matchEntity.setAwayTeamYellowCards(matchInput.getAwayTeamYellowCards());
-        matchEntity.setHomeTeamRedCards(matchInput.getHomeTeamRedCards());
-        matchEntity.setAwayTeamRedCards(matchInput.getAwayTeamRedCards());
+    public Match process(MatchInput matchInput) {
+        Match match = new Match();
+        match.setSeason(matchInput.getSeason());
+        match.setDate(LocalDate.parse(matchInput.getDate()));
+        match.setHomeTeam(matchInput.getHomeTeam());
+        match.setAwayTeam(matchInput.getAwayTeam());
+        match.setFullTimeHomeTeamGoals(matchInput.getFullTimeHomeTeamGoals());
+        match.setFullTimeAwayTeamGoals(matchInput.getFullTimeAwayTeamGoals());
+        match.setFullTimeResult(matchInput.getFullTimeResult());
+        match.setHalfTimeHomeTeamGoals(matchInput.getHalfTimeHomeTeamGoals());
+        match.setHalfTimeAwayTeamGoals(matchInput.getHalfTimeAwayTeamGoals());
+        match.setHalfTimeResult(matchInput.getHalfTimeResult());
+        match.setReferee(matchInput.getReferee());
+        match.setHomeTeamShots(matchInput.getHomeTeamShots());
+        match.setAwayTeamShots(matchInput.getAwayTeamShots());
+        match.setHomeTeamShotsOnTarget(matchInput.getHomeTeamShotsOnTarget());
+        match.setAwayTeamShotsOnTarget(matchInput.getAwayTeamShotsOnTarget());
+        match.setHomeTeamCorners(matchInput.getHomeTeamCorners());
+        match.setAwayTeamCorners(matchInput.getAwayTeamCorners());
+        match.setHomeTeamFoulsCommitted(matchInput.getHomeTeamFoulsCommitted());
+        match.setAwayTeamFoulsCommitted(matchInput.getAwayTeamFoulsCommitted());
+        match.setHomeTeamYellowCards(matchInput.getHomeTeamYellowCards());
+        match.setAwayTeamYellowCards(matchInput.getAwayTeamYellowCards());
+        match.setHomeTeamRedCards(matchInput.getHomeTeamRedCards());
+        match.setAwayTeamRedCards(matchInput.getAwayTeamRedCards());
 
-        return matchEntity;
+        return match;
     }
 }
