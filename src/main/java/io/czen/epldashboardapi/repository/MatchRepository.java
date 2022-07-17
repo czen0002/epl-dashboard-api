@@ -8,6 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -21,6 +22,15 @@ public interface MatchRepository extends CrudRepository<MatchEntity, Long> {
     );
 
     List<MatchEntity> getByHomeTeamOrAwayTeamOrderByDateDesc(@Param("teamName") String homeTeam, String awayTeam, Pageable pageable);
+
+    List<MatchEntity> getBySeason(String season);
+
+    List<MatchEntity> getByDateAfterAndDateBefore(LocalDate startDate, LocalDate endDate);
+
+    @Query("select m from MatchEntity m where (m.homeTeam=:teamName or m.awayTeam=:teamName) and m.date>:startDate " +
+            "and m.date<:endDate")
+    List<MatchEntity> getMatchesByTeamByDateAfterAndDateBefore(@Param("teamName") String teamName, @Param("startDate") LocalDate startDate,
+                                       @Param("endDate") LocalDate endDate);
 
     default List<MatchEntity> getLatestMatchesByTeam(String teamName, int count) {
         return getByHomeTeamOrAwayTeamOrderByDateDesc(teamName, teamName, PageRequest.of(0, count));
