@@ -1,9 +1,11 @@
 package io.czen.epldashboardapi.service;
 
 import io.czen.epldashboardapi.entity.MatchEntity;
+import io.czen.epldashboardapi.entity.RankingTableTeamEntity;
 import io.czen.epldashboardapi.entity.TeamEntity;
 import io.czen.epldashboardapi.model.Team;
 import io.czen.epldashboardapi.repository.MatchRepository;
+import io.czen.epldashboardapi.repository.RankingTableTeamRepository;
 import io.czen.epldashboardapi.repository.TeamRepository;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -31,35 +33,53 @@ public class TeamServiceTest {
     private final String EVERTON = "Everton";
     private final String HOME_WON = "H";
     private final String HOME_DRAWN = "D";
+    private final String SEASON = "2021-22";
 
     private final TeamRepository teamRepository;
     private final MatchRepository matchRepository;
+    private final RankingTableTeamRepository rankingTableTeamRepository;
+
     private MatchService matchService;
     private TeamService teamService;
+    private RankingTableTeamService rankingTableTeamService;
 
     @Autowired
-    public TeamServiceTest(TeamRepository teamRepository, MatchRepository matchRepository) {
+    public TeamServiceTest(TeamRepository teamRepository, MatchRepository matchRepository,
+                           RankingTableTeamRepository rankingTableTeamRepository) {
         this.teamRepository = teamRepository;
         this.matchRepository = matchRepository;
+        this.rankingTableTeamRepository = rankingTableTeamRepository;
     }
 
     @BeforeAll
     public void setup() {
+        MatchEntity matchEntity1 = new MatchEntity(ARSENAL, CHELSEA, HOME_WON);
+        MatchEntity matchEntity2 = new MatchEntity(ARSENAL, LIVERPOOL, HOME_WON);
+        MatchEntity matchEntity3 = new MatchEntity(ARSENAL, LEEDS, HOME_DRAWN);
+        Iterable<MatchEntity> iterableMatches = Arrays.asList(matchEntity1, matchEntity2, matchEntity3);
+        matchRepository.saveAll(iterableMatches);
+        matchService = new MatchService(matchRepository);
+
+        RankingTableTeamEntity tableTeamEntity1 = new RankingTableTeamEntity(ARSENAL, 4, SEASON);
+        tableTeamEntity1.setPoints(9);
+        RankingTableTeamEntity tableTeamEntity2 = new RankingTableTeamEntity(CHELSEA, 5, SEASON);
+        tableTeamEntity2.setPoints(10);
+        RankingTableTeamEntity tableTeamEntity3 = new RankingTableTeamEntity(LEEDS, 3, SEASON);
+        tableTeamEntity3.setPoints(3);
+        RankingTableTeamEntity tableTeamEntity4 = new RankingTableTeamEntity(LIVERPOOL, 4, SEASON);
+        tableTeamEntity4.setPoints(12);
+        Iterable<RankingTableTeamEntity> iterableTableTeams = Arrays.asList(tableTeamEntity1, tableTeamEntity2,
+                tableTeamEntity3, tableTeamEntity4);
+        rankingTableTeamRepository.saveAll(iterableTableTeams);
+        rankingTableTeamService = new RankingTableTeamService(rankingTableTeamRepository);
+
         TeamEntity teamEntity1 = new TeamEntity(ARSENAL);
         TeamEntity teamEntity2 = new TeamEntity(LEEDS);
         TeamEntity teamEntity3 = new TeamEntity(LIVERPOOL);
         TeamEntity teamEntity4 = new TeamEntity(CHELSEA);
         Iterable<TeamEntity> iterableTeams = Arrays.asList(teamEntity1, teamEntity2, teamEntity3, teamEntity4);
         teamRepository.saveAll(iterableTeams);
-
-        MatchEntity matchEntity1 = new MatchEntity(ARSENAL, CHELSEA, HOME_WON);
-        MatchEntity matchEntity2 = new MatchEntity(ARSENAL, LIVERPOOL, HOME_WON);
-        MatchEntity matchEntity3 = new MatchEntity(ARSENAL, LEEDS, HOME_DRAWN);
-        Iterable<MatchEntity> iterableMatches = Arrays.asList(matchEntity1, matchEntity2, matchEntity3);
-        matchRepository.saveAll(iterableMatches);
-
-        matchService = new MatchService(matchRepository);
-        teamService = new TeamService(teamRepository, matchService);
+        teamService = new TeamService(teamRepository, matchService, rankingTableTeamService);
     }
 
     @AfterAll
@@ -100,5 +120,13 @@ public class TeamServiceTest {
     public void shouldGetTeamWithMatchesNull() {
         Team result = teamService.getTeamWithMatches(EVERTON, 3);
         assertNull(result);
+    }
+
+    @Test
+    public void shouldGetTeamsBySeason() {
+        List<Team> result = teamService.getTeamsBySeason(SEASON);
+        assertEquals(4, result.size());
+        assertEquals(ARSENAL, result.get(0).getTeamName());
+        assertEquals(LIVERPOOL, result.get(3).getTeamName());
     }
 }

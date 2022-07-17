@@ -26,6 +26,7 @@ public class TeamControllerTest {
     private final String CHELSEA = "Chelsea";
     private final String LIVERPOOL = "Liverpool";
     private final String HOME_WON = "H";
+    private final String SEASON = "2021-22";
 
     @InjectMocks
     private TeamController teamController;
@@ -61,6 +62,14 @@ public class TeamControllerTest {
         Team result = teamController.getTeam(ARSENAL, 2);
 
         assertNull(result);
+    }
+
+    @Test
+    public void shouldGetTeamsBySeason() {
+        List<Team> teams = generateMockTeamList();
+        when(teamService.getTeamsBySeason(anyString())).thenReturn(teams);
+        List<Team> result = teamController.getTeamsBySeason(SEASON);
+        assertEquals(2, result.size());
     }
 
     private List<Team> generateMockTeamList() {
