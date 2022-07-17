@@ -33,4 +33,9 @@ public class TeamController {
     public Team getTeam(@PathVariable String teamName, @RequestParam int count) {
         return teamService.getTeamWithMatches(teamName, count);
     }
+
+    @GetMapping(value = "/season/{season}")
+    public List<Team> getTeamsBySeason(@PathVariable String season) {
+        return teamService.getTeamsBySeason(season);
+    }
 }
