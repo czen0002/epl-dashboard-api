@@ -10,6 +10,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -42,12 +43,16 @@ public class MatchServiceTest {
     public void setup() {
         MatchEntity matchEntity1 = new MatchEntity(ARSENAL, CHELSEA, HOME_WON);
         matchEntity1.setSeason(SEASON);
+        matchEntity1.setDate(LocalDate.of(2021, 9, 30));
         MatchEntity matchEntity2 = new MatchEntity(ARSENAL, LEEDS, HOME_DRAWN);
         matchEntity2.setSeason(SEASON);
+        matchEntity2.setDate(LocalDate.of(2021, 9, 1));
         MatchEntity matchEntity3 = new MatchEntity(ARSENAL, LIVERPOOL, HOME_LOST);
         matchEntity3.setSeason(SEASON);
+        matchEntity3.setDate(LocalDate.of(2022, 3, 1));
         MatchEntity matchEntity4 = new MatchEntity(CHELSEA, LIVERPOOL, HOME_DRAWN);
         matchEntity4.setSeason(SEASON);
+        matchEntity4.setDate(LocalDate.of(2021, 9, 24));
         Iterable<MatchEntity> iterableMatches = Arrays.asList(matchEntity1, matchEntity2, matchEntity3, matchEntity4);
         matchRepository.saveAll(iterableMatches);
         matchService = new MatchService(matchRepository);
@@ -59,20 +64,40 @@ public class MatchServiceTest {
     }
 
     @Test
-    public void shouldGetMatchesBySeason() {
-        List<Match> result = matchService.getMatchesBySeason(ARSENAL, SEASON);
+    public void shouldGetMatchesByTeamBySeason() {
+        List<Match> result = matchService.getMatchesByTeamBySeason(ARSENAL, SEASON);
         assertEquals(3, result.size());
     }
 
     @Test
     public void shouldGetEmptyMatchesBySeason() {
-        List<Match> result = matchService.getMatchesBySeason(EVERTON, SEASON);
+        List<Match> result = matchService.getMatchesByTeamBySeason(EVERTON, SEASON);
         assertEquals(0, result.size());
     }
 
     @Test
     public void shouldGetTwoLatestMatchesByTeam() {
         List<Match> result = matchService.getLatestMatchesByTeam(ARSENAL, 2);
+        assertEquals(2, result.size());
+    }
+
+    @Test
+    public void shouldGetMatchesBySeason() {
+        List<Match> result = matchService.getMatchesBySeason(SEASON);
+        assertEquals(4, result.size());
+    }
+
+    @Test
+    public void shouldGetMatchesByMonthBySeason() {
+        List<Match> result1 = matchService.getMatchesByMonthBySeason("9", SEASON);
+        List<Match> result2 = matchService.getMatchesByMonthBySeason("3", SEASON);
+        assertEquals(3, result1.size());
+        assertEquals(1, result2.size());
+    }
+
+    @Test
+    public void shouldGetMatchesByTeamByMonthBySeason() {
+        List<Match> result = matchService.getMatchesByTeamByMonthBySeason(ARSENAL, "9", SEASON);
         assertEquals(2, result.size());
     }
 }

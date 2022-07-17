@@ -6,6 +6,7 @@ import io.czen.epldashboardapi.util.MatchConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -18,11 +19,41 @@ public class MatchService {
         this.matchRepository = matchRepository;
     }
 
-    public List<Match> getMatchesBySeason(String teamName, String season) {
+    public List<Match> getMatchesByTeamBySeason(String teamName, String season) {
         return MatchConverter.convertMatchEntities(matchRepository.getMatchesByTeamBySeason(teamName, season));
     }
 
     public List<Match> getLatestMatchesByTeam(String teamName, int count) {
         return MatchConverter.convertMatchEntities(matchRepository.getLatestMatchesByTeam(teamName, count));
+    }
+
+    public List<Match> getMatchesBySeason(String season) {
+        return MatchConverter.convertMatchEntities(matchRepository.getBySeason(season));
+    }
+
+    public List<Match> getMatchesByMonthBySeason(String month, String season) {
+        LocalDate startDate = generateDate(month, season, true);
+        LocalDate endDate = generateDate(month, season, false);
+        return MatchConverter.convertMatchEntities(matchRepository.getByDateAfterAndDateBefore(startDate, endDate));
+    }
+
+    public List<Match> getMatchesByTeamByMonthBySeason(String teamName, String month, String season) {
+        LocalDate startDate = generateDate(month, season, true);
+        LocalDate endDate = generateDate(month, season, false);
+        return MatchConverter.convertMatchEntities(matchRepository.getMatchesByTeamByDateAfterAndDateBefore(teamName,
+                startDate, endDate));
+    }
+
+    private LocalDate generateDate(String month, String season, boolean isStartDate) {
+        String[] years = season.split("-");
+        int startYear = Integer.parseInt(years[0]);
+        int intMonth = Integer.parseInt(month);
+        if (isStartDate) {
+            return intMonth > 7 ? LocalDate.of(startYear, intMonth, 1).minusDays(1)
+                    : LocalDate.of(startYear+1, intMonth, 1).minusDays(1);
+        } else {
+            return intMonth > 7 ? LocalDate.of(startYear, intMonth+1, 1) : LocalDate.of(
+                    startYear+1, intMonth+1, 1);
+        }
     }
 }
