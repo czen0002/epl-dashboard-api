@@ -3,7 +3,6 @@ package io.czen.epldashboardapi.controller;
 import io.czen.epldashboardapi.model.Match;
 import io.czen.epldashboardapi.model.RankingTableTeam;
 import io.czen.epldashboardapi.model.Team;
-import io.czen.epldashboardapi.service.MatchService;
 import io.czen.epldashboardapi.service.RankingTableTeamService;
 import io.czen.epldashboardapi.service.TeamService;
 import org.junit.jupiter.api.Test;
@@ -30,16 +29,12 @@ public class TeamControllerTest {
     private final String LIVERPOOL = "Liverpool";
     private final String HOME_WON = "H";
     private final String SEASON = "2021-22";
-    private final String MONTH = "3";
 
     @InjectMocks
     private TeamController teamController;
 
     @Mock
     private TeamService teamService;
-
-    @Mock
-    private MatchService matchService;
 
     @Mock
     private RankingTableTeamService rankingTableTeamService;
@@ -55,22 +50,8 @@ public class TeamControllerTest {
     }
 
     @Test
-    public void shouldGetMatchesForTeamInSeason() {
-        List<Match> matches = generateMockMatchList();
-        when(matchService.getMatchesByTeamBySeason(anyString(), anyString())).thenReturn(matches);
-        List<Match> results = teamController.getMatchesForTeamInSeason(ARSENAL, SEASON);
-
-        assertEquals(2, results.size());
-        assertEquals(ARSENAL, results.get(0).getHomeTeam());
-        assertEquals(CHELSEA, results.get(0).getAwayTeam());
-        assertEquals(HOME_WON, results.get(0).getFullTimeResult());
-    }
-
-    @Test
     public void shouldGetTeam() {
-        List<Match> matches = generateMockMatchList();
-        Team team = new Team(ARSENAL);
-        team.setMatches(matches);
+        Team team = generateMockTeam();
         when(teamService.getTeamWithMatches(anyString(), anyInt())).thenReturn(team);
         Team result = teamController.getTeam(ARSENAL, 2);
 
@@ -100,43 +81,19 @@ public class TeamControllerTest {
         assertEquals(LIVERPOOL, result.get(2).getTeamName());
     }
 
-    @Test
-    public void shouldGetMatchesForTeamInMonthInSeason() {
-        List<Match> matches = generateMockMatchList();
-        when(matchService.getMatchesByTeamByMonthBySeason(anyString(), anyString(), anyString())).thenReturn(matches);
-        List<Match> result = teamController.getMatchesForTeamInMonthInSeason(ARSENAL, MONTH, SEASON);
-
-        assertEquals(2, result.size());
-    }
-
-    @Test
-    public void shouldGetMatchesInSeason() {
-        List<Match> matches = generateMockMatchList();
-        when(matchService.getMatchesBySeason(anyString())).thenReturn(matches);
-        List<Match> result = teamController.getMatchesInSeason(SEASON);
-
-        assertEquals(2, result.size());
-    }
-
-    @Test
-    public void shouldGetMatchesInMonthInSeason() {
-        List<Match> matches = generateMockMatchList();
-        when(matchService.getMatchesByMonthBySeason(anyString(), anyString())).thenReturn(matches);
-        List<Match> result = teamController.getMatchesInMonthInSeason(MONTH, SEASON);
-
-        assertEquals(2, result.size());
-    }
-
-    private List<Match> generateMockMatchList() {
-        Match match1 = new Match(ARSENAL, CHELSEA, HOME_WON);
-        Match match2 = new Match(ARSENAL, LIVERPOOL, HOME_WON);
-        return Arrays.asList(match1, match2);
-    }
-
     private List<Team> generateMockTeamList() {
         Team team1 = new Team(ARSENAL);
         Team team2 = new Team(CHELSEA);
         return Arrays.asList(team1, team2);
+    }
+
+    private Team generateMockTeam() {
+        Match match1 = new Match(ARSENAL, CHELSEA, HOME_WON);
+        Match match2 = new Match(ARSENAL, LIVERPOOL, HOME_WON);
+        List<Match> matches = Arrays.asList(match1, match2);
+        Team team = new Team(ARSENAL);
+        team.setMatches(matches);
+        return team;
     }
 
     private List<RankingTableTeam> generateMockRankingTableTeamList() {
