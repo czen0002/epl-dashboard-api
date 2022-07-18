@@ -26,7 +26,8 @@ public class TeamControllerTest {
     private final String CHELSEA = "Chelsea";
     private final String LIVERPOOL = "Liverpool";
     private final String HOME_WON = "H";
-    private final String SEASON = "2021-22";
+    private final String SEASON22 = "2021-22";
+    private final String SEASON21 = "2020-21";
 
     @InjectMocks
     private TeamController teamController;
@@ -68,8 +69,16 @@ public class TeamControllerTest {
     public void shouldGetTeamsBySeason() {
         List<Team> teams = generateMockTeamList();
         when(teamService.getTeamsBySeason(anyString())).thenReturn(teams);
-        List<Team> result = teamController.getTeamsBySeason(SEASON);
+        List<Team> result = teamController.getTeamsBySeason(SEASON22);
         assertEquals(2, result.size());
+    }
+
+    @Test
+    public void shouldGetTeamWithAllSeasons() {
+        Team team = generateMockTeam();
+        when(teamService.getTeamWithSeasons(anyString())).thenReturn(team);
+        Team result = teamController.getTeamWithSeasons(ARSENAL);
+        assertEquals(2, result.getSeasons().size());
     }
 
     private List<Team> generateMockTeamList() {
@@ -82,8 +91,11 @@ public class TeamControllerTest {
         Match match1 = new Match(ARSENAL, CHELSEA, HOME_WON);
         Match match2 = new Match(ARSENAL, LIVERPOOL, HOME_WON);
         List<Match> matches = Arrays.asList(match1, match2);
+        List<String> seasons = Arrays.asList(SEASON22, SEASON21);
         Team team = new Team(ARSENAL);
         team.setMatches(matches);
+        team.setSeasons(seasons);
         return team;
     }
+
 }

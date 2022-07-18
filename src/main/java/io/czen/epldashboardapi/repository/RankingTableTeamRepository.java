@@ -10,4 +10,6 @@ import java.util.List;
 public interface RankingTableTeamRepository extends CrudRepository<RankingTableTeamEntity, Long> {
 
     List<RankingTableTeamEntity> getBySeasonOrderByPointsDesc(String season);
+
+    List<RankingTableTeamEntity> getByTeamNameOrderBySeasonDesc(String teamName);
 }

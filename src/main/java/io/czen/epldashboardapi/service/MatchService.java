@@ -52,8 +52,13 @@ public class MatchService {
             return intMonth > 7 ? LocalDate.of(startYear, intMonth, 1).minusDays(1)
                     : LocalDate.of(startYear+1, intMonth, 1).minusDays(1);
         } else {
-            return intMonth > 7 ? LocalDate.of(startYear, intMonth+1, 1) : LocalDate.of(
-                    startYear+1, intMonth+1, 1);
+            if (intMonth == 12) {
+                return LocalDate.of(startYear+1, 1, 1);
+            } else if (intMonth > 7) {
+                return LocalDate.of(startYear, intMonth+1, 1);
+            } else {
+                return LocalDate.of(startYear+1, intMonth+1, 1);
+            }
         }
     }
 }

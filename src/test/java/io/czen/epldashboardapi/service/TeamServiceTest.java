@@ -33,7 +33,9 @@ public class TeamServiceTest {
     private final String EVERTON = "Everton";
     private final String HOME_WON = "H";
     private final String HOME_DRAWN = "D";
-    private final String SEASON = "2021-22";
+    private final String SEASON22 = "2021-22";
+    private final String SEASON21 = "2020-21";
+    private final String SEASON20 = "2019-20";
 
     private final TeamRepository teamRepository;
     private final MatchRepository matchRepository;
@@ -60,16 +62,18 @@ public class TeamServiceTest {
         matchRepository.saveAll(iterableMatches);
         matchService = new MatchService(matchRepository);
 
-        RankingTableTeamEntity tableTeamEntity1 = new RankingTableTeamEntity(ARSENAL, 4, SEASON);
+        RankingTableTeamEntity tableTeamEntity1 = new RankingTableTeamEntity(ARSENAL, 4, SEASON22);
         tableTeamEntity1.setPoints(9);
-        RankingTableTeamEntity tableTeamEntity2 = new RankingTableTeamEntity(CHELSEA, 5, SEASON);
+        RankingTableTeamEntity tableTeamEntity2 = new RankingTableTeamEntity(CHELSEA, 5, SEASON22);
         tableTeamEntity2.setPoints(10);
-        RankingTableTeamEntity tableTeamEntity3 = new RankingTableTeamEntity(LEEDS, 3, SEASON);
+        RankingTableTeamEntity tableTeamEntity3 = new RankingTableTeamEntity(LEEDS, 3, SEASON22);
         tableTeamEntity3.setPoints(3);
-        RankingTableTeamEntity tableTeamEntity4 = new RankingTableTeamEntity(LIVERPOOL, 4, SEASON);
+        RankingTableTeamEntity tableTeamEntity4 = new RankingTableTeamEntity(LIVERPOOL, 4, SEASON22);
         tableTeamEntity4.setPoints(12);
+        RankingTableTeamEntity tableTeamEntity5 = new RankingTableTeamEntity(ARSENAL, 38, SEASON20);
+        RankingTableTeamEntity tableTeamEntity6 = new RankingTableTeamEntity(ARSENAL, 38, SEASON21);
         Iterable<RankingTableTeamEntity> iterableTableTeams = Arrays.asList(tableTeamEntity1, tableTeamEntity2,
-                tableTeamEntity3, tableTeamEntity4);
+                tableTeamEntity3, tableTeamEntity4, tableTeamEntity5, tableTeamEntity6);
         rankingTableTeamRepository.saveAll(iterableTableTeams);
         rankingTableTeamService = new RankingTableTeamService(rankingTableTeamRepository);
 
@@ -124,9 +128,18 @@ public class TeamServiceTest {
 
     @Test
     public void shouldGetTeamsBySeason() {
-        List<Team> result = teamService.getTeamsBySeason(SEASON);
+        List<Team> result = teamService.getTeamsBySeason(SEASON22);
         assertEquals(4, result.size());
         assertEquals(ARSENAL, result.get(0).getTeamName());
         assertEquals(LIVERPOOL, result.get(3).getTeamName());
+    }
+
+    @Test
+    public void shouldGetTeamWithAllSeasons() {
+        Team team = teamService.getTeamWithSeasons(ARSENAL);
+        assertEquals(3, team.getSeasons().size());
+        assertEquals(SEASON22, team.getSeasons().get(0));
+        assertEquals(SEASON21, team.getSeasons().get(1));
+        assertEquals(SEASON20, team.getSeasons().get(2));
     }
 }

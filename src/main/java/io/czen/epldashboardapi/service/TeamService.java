@@ -8,6 +8,7 @@ import io.czen.epldashboardapi.util.TeamConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,5 +51,15 @@ public class TeamService {
         List<Team> teams = rankingTableTeams.stream().map(t -> new Team(t.getTeamName())).collect(Collectors.toList());
         Collections.sort(teams, (t1, t2) -> t1.getTeamName().compareTo(t2.getTeamName()));
         return teams;
+    }
+
+    public Team getTeamWithSeasons(String teamName) {
+        TeamEntity teamEntity = teamRepository.findByTeamName(teamName).orElse(null);
+        if (teamEntity == null) return null;
+        Team team = new Team(teamEntity.getTeamName());
+        team.setSeasons(new ArrayList<>());
+        List<RankingTableTeam> rankingTableTeams = rankingTableTeamService.getTeamByTeamNameInSeasons(teamName);
+        rankingTableTeams.stream().forEach(t -> team.getSeasons().add(t.getSeason()));
+        return team;
     }
 }
