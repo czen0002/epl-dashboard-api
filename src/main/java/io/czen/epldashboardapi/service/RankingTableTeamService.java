@@ -22,4 +22,9 @@ public class RankingTableTeamService {
         return RankingTableTeamConverter.convertRankingTableTeamEntities(
                 rankingTableTeamRepository.getBySeasonOrderByPointsDesc(season));
     }
+
+    public List<RankingTableTeam> getTeamByTeamNameInSeasons(String teamName) {
+        return RankingTableTeamConverter.convertRankingTableTeamEntities(
+                rankingTableTeamRepository.getByTeamNameOrderBySeasonDesc(teamName));
+    }
 }
