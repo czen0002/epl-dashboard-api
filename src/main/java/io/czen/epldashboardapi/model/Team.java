@@ -11,6 +11,7 @@ public class Team {
 
     private String teamName;
     private List<Match> matches;
+    private List<String> seasons;
 
     public Team(String teamName) {
         this.teamName = teamName;
