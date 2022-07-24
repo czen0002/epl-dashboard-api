@@ -28,20 +28,21 @@ public class MatchService {
     }
 
     public List<Match> getMatchesBySeason(String season) {
-        return MatchConverter.convertMatchEntities(matchRepository.getBySeason(season));
+        return MatchConverter.convertMatchEntities(matchRepository.getBySeasonOrderByDateDesc(season));
     }
 
     public List<Match> getMatchesByMonthBySeason(String month, String season) {
         LocalDate startDate = generateDate(month, season, true);
         LocalDate endDate = generateDate(month, season, false);
-        return MatchConverter.convertMatchEntities(matchRepository.getByDateAfterAndDateBefore(startDate, endDate));
+        return MatchConverter.convertMatchEntities(
+                matchRepository.getByDateAfterAndDateBeforeOrderByDateDesc(startDate, endDate));
     }
 
     public List<Match> getMatchesByTeamByMonthBySeason(String teamName, String month, String season) {
         LocalDate startDate = generateDate(month, season, true);
         LocalDate endDate = generateDate(month, season, false);
-        return MatchConverter.convertMatchEntities(matchRepository.getMatchesByTeamByDateAfterAndDateBefore(teamName,
-                startDate, endDate));
+        return MatchConverter.convertMatchEntities(
+                matchRepository.getMatchesByTeamByDateAfterAndDateBeforeOrderByDateDesc(teamName, startDate, endDate));
     }
 
     private LocalDate generateDate(String month, String season, boolean isStartDate) {

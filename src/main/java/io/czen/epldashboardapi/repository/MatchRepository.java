@@ -23,13 +23,13 @@ public interface MatchRepository extends CrudRepository<MatchEntity, Long> {
 
     List<MatchEntity> getByHomeTeamOrAwayTeamOrderByDateDesc(@Param("teamName") String homeTeam, String awayTeam, Pageable pageable);
 
-    List<MatchEntity> getBySeason(String season);
+    List<MatchEntity> getBySeasonOrderByDateDesc(String season);
 
-    List<MatchEntity> getByDateAfterAndDateBefore(LocalDate startDate, LocalDate endDate);
+    List<MatchEntity> getByDateAfterAndDateBeforeOrderByDateDesc(LocalDate startDate, LocalDate endDate);
 
     @Query("select m from MatchEntity m where (m.homeTeam=:teamName or m.awayTeam=:teamName) and m.date>:startDate " +
-            "and m.date<:endDate")
-    List<MatchEntity> getMatchesByTeamByDateAfterAndDateBefore(@Param("teamName") String teamName, @Param("startDate") LocalDate startDate,
+            "and m.date<:endDate order by date desc")
+    List<MatchEntity> getMatchesByTeamByDateAfterAndDateBeforeOrderByDateDesc(@Param("teamName") String teamName, @Param("startDate") LocalDate startDate,
                                        @Param("endDate") LocalDate endDate);
 
     default List<MatchEntity> getLatestMatchesByTeam(String teamName, int count) {
