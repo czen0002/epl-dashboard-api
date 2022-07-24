@@ -67,6 +67,7 @@ public class MatchServiceTest {
     public void shouldGetMatchesByTeamBySeason() {
         List<Match> result = matchService.getMatchesByTeamBySeason(ARSENAL, SEASON);
         assertEquals(3, result.size());
+        assertEquals(LocalDate.of(2022, 3, 1), result.get(0).getDate());
     }
 
     @Test
@@ -85,6 +86,7 @@ public class MatchServiceTest {
     public void shouldGetMatchesBySeason() {
         List<Match> result = matchService.getMatchesBySeason(SEASON);
         assertEquals(4, result.size());
+        assertEquals(LocalDate.of(2022, 3, 1), result.get(0).getDate());
     }
 
     @Test
@@ -93,11 +95,13 @@ public class MatchServiceTest {
         List<Match> result2 = matchService.getMatchesByMonthBySeason("3", SEASON);
         assertEquals(3, result1.size());
         assertEquals(1, result2.size());
+        assertEquals(LocalDate.of(2021, 9, 30),  result1.get(0).getDate());
     }
 
     @Test
     public void shouldGetMatchesByTeamByMonthBySeason() {
         List<Match> result = matchService.getMatchesByTeamByMonthBySeason(ARSENAL, "9", SEASON);
         assertEquals(2, result.size());
+        assertEquals(LocalDate.of(2021, 9, 30), result.get(0).getDate());
     }
 }
