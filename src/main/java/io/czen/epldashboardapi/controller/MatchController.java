@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping(value = "/v1/match")
+@RequestMapping(value = "/match")
 public class MatchController {
 
     private final MatchService matchService;

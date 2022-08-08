@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping(value = "/v1/table")
+@RequestMapping(value = "/table")
 public class TableController {
 
     private final RankingTableTeamService rankingTableTeamService;
