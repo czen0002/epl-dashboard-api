@@ -4,10 +4,8 @@ import io.czen.epldashboardapi.entity.MatchEntity;
 import io.czen.epldashboardapi.model.Match;
 import io.czen.epldashboardapi.repository.MatchRepository;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
@@ -16,7 +14,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@RunWith(SpringRunner.class)
 @DataJpaTest
 @SuppressWarnings("squid:S5786")
 public class MatchWriterTest {

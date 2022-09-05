@@ -2,7 +2,6 @@ package io.czen.epldashboardapi.data.processor;
 
 
 import io.czen.epldashboardapi.data.MatchInput;
-import io.czen.epldashboardapi.entity.MatchEntity;
 import io.czen.epldashboardapi.model.Match;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
