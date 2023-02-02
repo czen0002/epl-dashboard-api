@@ -18,9 +18,11 @@ public class MatchMapperTest {
 
     @Test
     public void mapMatchEntitySuccessfully() {
+        // Given
         MatchEntity matchEntity= new MatchEntity(ARSENAL, CHELSEA, HOME_DRAWN);
+        // When
         Match result = MatchMapper.mapMatchEntity(matchEntity);
-
+        // Then
         assertEquals(ARSENAL, result.getHomeTeam());
         assertEquals(CHELSEA, result.getAwayTeam());
         assertEquals(HOME_DRAWN, result.getFullTimeResult());
@@ -28,11 +30,13 @@ public class MatchMapperTest {
 
     @Test
     public void mapMatchEntitiesSuccessfully() {
+        // Given
         MatchEntity matchEntity1= new MatchEntity(ARSENAL, CHELSEA, HOME_DRAWN);
         MatchEntity matchEntity2= new MatchEntity(CHELSEA, ARSENAL, HOME_WON);
         List<MatchEntity> matchEntities = Arrays.asList(matchEntity1, matchEntity2);
+        // When
         List<Match> result = MatchMapper.mapMatchEntities(matchEntities);
-
+        // Then
         assertEquals(2, result.size());
         assertEquals(ARSENAL, result.get(0).getHomeTeam());
         assertEquals(CHELSEA, result.get(1).getHomeTeam());

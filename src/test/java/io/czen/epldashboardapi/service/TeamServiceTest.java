@@ -7,6 +7,8 @@ import io.czen.epldashboardapi.model.Team;
 import io.czen.epldashboardapi.repository.MatchRepository;
 import io.czen.epldashboardapi.repository.RankingTableTeamRepository;
 import io.czen.epldashboardapi.repository.TeamRepository;
+import io.czen.epldashboardapi.util.RankingTableTeamMapper;
+import io.czen.epldashboardapi.util.TeamMapper;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -40,10 +42,13 @@ public class TeamServiceTest {
     private final TeamRepository teamRepository;
     private final MatchRepository matchRepository;
     private final RankingTableTeamRepository rankingTableTeamRepository;
+    private final TeamMapper teamMapper = new TeamMapper();
+    private final RankingTableTeamMapper rankingTableTeamMapper = new RankingTableTeamMapper();
 
     private MatchService matchService;
     private TeamService teamService;
     private RankingTableTeamService rankingTableTeamService;
+
 
     @Autowired
     public TeamServiceTest(TeamRepository teamRepository, MatchRepository matchRepository,
@@ -75,7 +80,7 @@ public class TeamServiceTest {
         Iterable<RankingTableTeamEntity> iterableTableTeams = Arrays.asList(tableTeamEntity1, tableTeamEntity2,
                 tableTeamEntity3, tableTeamEntity4, tableTeamEntity5, tableTeamEntity6);
         rankingTableTeamRepository.saveAll(iterableTableTeams);
-        rankingTableTeamService = new RankingTableTeamService(rankingTableTeamRepository);
+        rankingTableTeamService = new RankingTableTeamService(rankingTableTeamRepository, rankingTableTeamMapper);
 
         TeamEntity teamEntity1 = new TeamEntity(ARSENAL);
         TeamEntity teamEntity2 = new TeamEntity(LEEDS);
@@ -83,7 +88,7 @@ public class TeamServiceTest {
         TeamEntity teamEntity4 = new TeamEntity(CHELSEA);
         Iterable<TeamEntity> iterableTeams = Arrays.asList(teamEntity1, teamEntity2, teamEntity3, teamEntity4);
         teamRepository.saveAll(iterableTeams);
-        teamService = new TeamService(teamRepository, matchService, rankingTableTeamService);
+        teamService = new TeamService(teamRepository, matchService, rankingTableTeamService, teamMapper);
     }
 
     @AfterAll

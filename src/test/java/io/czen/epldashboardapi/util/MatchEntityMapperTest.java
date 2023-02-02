@@ -14,9 +14,11 @@ public class MatchEntityMapperTest {
 
     @Test
     public void mapMatchSuccessfully() {
+        // Given
         Match match = new Match(ARSENAL, CHELSEA, HOME_DRAWN);
+        // When
         MatchEntity result = MatchEntityMapper.mapMatch(match);
-
+        // Then
         assertEquals(ARSENAL, result.getHomeTeam());
         assertEquals(CHELSEA, result.getAwayTeam());
         assertEquals(HOME_DRAWN, result.getFullTimeResult());
