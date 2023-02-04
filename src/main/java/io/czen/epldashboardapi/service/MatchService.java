@@ -2,7 +2,7 @@ package io.czen.epldashboardapi.service;
 
 import io.czen.epldashboardapi.model.Match;
 import io.czen.epldashboardapi.repository.MatchRepository;
-import io.czen.epldashboardapi.util.MatchConverter;
+import io.czen.epldashboardapi.util.MatchMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,28 +20,28 @@ public class MatchService {
     }
 
     public List<Match> getMatchesByTeamBySeason(String teamName, String season) {
-        return MatchConverter.convertMatchEntities(matchRepository.getMatchesByTeamBySeason(teamName, season));
+        return MatchMapper.mapMatchEntities(matchRepository.getMatchesByTeamBySeason(teamName, season));
     }
 
     public List<Match> getLatestMatchesByTeam(String teamName, int count) {
-        return MatchConverter.convertMatchEntities(matchRepository.getLatestMatchesByTeam(teamName, count));
+        return MatchMapper.mapMatchEntities(matchRepository.getLatestMatchesByTeam(teamName, count));
     }
 
     public List<Match> getMatchesBySeason(String season) {
-        return MatchConverter.convertMatchEntities(matchRepository.getBySeasonOrderByDateDesc(season));
+        return MatchMapper.mapMatchEntities(matchRepository.getBySeasonOrderByDateDesc(season));
     }
 
     public List<Match> getMatchesByMonthBySeason(String month, String season) {
         LocalDate startDate = generateDate(month, season, true);
         LocalDate endDate = generateDate(month, season, false);
-        return MatchConverter.convertMatchEntities(
+        return MatchMapper.mapMatchEntities(
                 matchRepository.getByDateAfterAndDateBeforeOrderByDateDesc(startDate, endDate));
     }
 
     public List<Match> getMatchesByTeamByMonthBySeason(String teamName, String month, String season) {
         LocalDate startDate = generateDate(month, season, true);
         LocalDate endDate = generateDate(month, season, false);
-        return MatchConverter.convertMatchEntities(
+        return MatchMapper.mapMatchEntities(
                 matchRepository.getMatchesByTeamByDateAfterAndDateBeforeOrderByDateDesc(teamName, startDate, endDate));
     }
 

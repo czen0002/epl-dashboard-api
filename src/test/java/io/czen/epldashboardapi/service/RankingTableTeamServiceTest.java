@@ -3,6 +3,7 @@ package io.czen.epldashboardapi.service;
 import io.czen.epldashboardapi.entity.RankingTableTeamEntity;
 import io.czen.epldashboardapi.model.RankingTableTeam;
 import io.czen.epldashboardapi.repository.RankingTableTeamRepository;
+import io.czen.epldashboardapi.util.RankingTableTeamMapper;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -29,6 +30,7 @@ public class RankingTableTeamServiceTest {
     private final String SEASON20 = "2019-20";
 
     private final RankingTableTeamRepository rankingTableTeamRepository;
+    private final RankingTableTeamMapper rankingTableTeamMapper = new RankingTableTeamMapper();
     private RankingTableTeamService rankingTableTeamService;
 
     @Autowired
@@ -51,7 +53,7 @@ public class RankingTableTeamServiceTest {
         Iterable<RankingTableTeamEntity> iterableTeams = Arrays.asList(teamEntity1, teamEntity2, teamEntity3,
                 teamEntity4, teamEntity5, teamEntity6);
         rankingTableTeamRepository.saveAll(iterableTeams);
-        rankingTableTeamService = new RankingTableTeamService(rankingTableTeamRepository);
+        rankingTableTeamService = new RankingTableTeamService(rankingTableTeamRepository, rankingTableTeamMapper);
     }
 
     @AfterAll

@@ -2,7 +2,7 @@ package io.czen.epldashboardapi.data.writer;
 
 import io.czen.epldashboardapi.entity.MatchEntity;
 import io.czen.epldashboardapi.model.Match;
-import io.czen.epldashboardapi.util.MatchConverter;
+import io.czen.epldashboardapi.util.MatchEntityMapper;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -26,7 +26,7 @@ public class MatchWriter implements ItemWriter<Match> {
     }
 
     private void saveMatchEntity(Match match) {
-        MatchEntity matchEntity = MatchConverter.convertMatch(match);
+        MatchEntity matchEntity = MatchEntityMapper.mapMatch(match);
         em.persist(matchEntity);
     }
 }
