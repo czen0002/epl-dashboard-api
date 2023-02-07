@@ -28,6 +28,7 @@ dependencies {
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
 
 	implementation "org.springframework.boot:spring-boot-starter-actuator:${actuatorVersion}"
+	implementation "io.springfox:springfox-boot-starter:${springfoxVersion}"
 }
 
 test {
